@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ИТТСУ РУТ (МИИТ) - Образовательные программы</title>
+    <title>ИЖТ РУТ - Образовательные программы</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,14 +18,13 @@
                     <div class="logo-university">РОССИЙСКИЙ УНИВЕРСИТЕТ ТРАНСПОРТА</div>
                 </div>
                 <div class="logo-divider" aria-hidden="true"></div>
-                <div class="logo-unit">ИТТСУ</div>
+                <div class="logo-unit">ИЖТ</div>
             </a>
             <nav>
                 <ul>
-                    <li><a href="#programs">Программы</a></li>
-                    <li><a href="#benefits">Преимущества</a></li>
+                    <li><a href="#programs">Специальности</a></li>
                     <li><a href="#how-to-apply">Как поступить</a></li>
-                    <li><a href="#contacts">Контакты</a></li>
+                    <li><a href="#contacts">Приёмная комиссия</a></li>
                 </ul>
             </nav>
             <button class="mobile-menu-btn" onclick="toggleMobileNav()">
@@ -39,30 +38,35 @@
     <!-- Mobile Navigation -->
     <div class="mobile-nav" id="mobileNav">
         <ul>
-            <li><a href="#programs" onclick="toggleMobileNav()">Программы</a></li>
-            <li><a href="#benefits" onclick="toggleMobileNav()">Преимущества</a></li>
+            <li><a href="#programs" onclick="toggleMobileNav()">Специальности</a></li>
             <li><a href="#how-to-apply" onclick="toggleMobileNav()">Как поступить</a></li>
-            <li><a href="#contacts" onclick="toggleMobileNav()">Контакты</a></li>
+            <li><a href="#contacts" onclick="toggleMobileNav()">Приёмная комиссия</a></li>
         </ul>
     </div>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Поступай в ИТТСУ — бюджет, практика, современные аудитории</h1>
-            <p>Более 30 образовательных программ в сфере IT, телекоммуникаций и транспорта. Гарантия трудоустройства у партнёров вуза.</p>
+            <div class="hero-eyebrow">Российский университет транспорта</div>
+            <h1>ИЖТ РУТ</h1>
+            <p>33 специальности для железнодорожного транспорта, инженерии, энергетики, безопасности, IT и управления</p>
             <div class="hero-buttons">
-                <a href="#programs" class="btn btn-primary">📚 Смотреть программы</a>
-                <a href="#how-to-apply" class="btn btn-outline">📝 Как поступить</a>
+                <a href="#programs" class="btn btn-primary">Выбрать специальность</a>
+                <a href="#contacts" class="btn btn-outline">Приёмная комиссия</a>
+            </div>
+            <div class="hero-stats" aria-label="Краткая информация">
+                <div><span>33</span>специальности</div>
+                <div><span>2</span>уровня образования</div>
+                <div><span>3</span>формы обучения</div>
             </div>
         </div>
     </section>
 
-    <!-- Benefits Section -->
+    <!-- Benefits Section
     <section class="benefits" id="benefits">
         <div class="container">
-            <h2 class="section-title">Почему выбирают ИТТСУ</h2>
-            <p class="section-subtitle">Мы готовим специалистов будущего с актуальными навыками для транспортной отрасли.</p>
+            <h2 class="section-title">Почему выбирают ИЖТ РУТ</h2>
+            <p class="section-subtitle">Специалисты для транспортной отрасли</p>
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-image">
@@ -94,66 +98,74 @@
             </div>
         </div>
     </section>
+    -->
 
     <!-- Programs Section -->
     <section class="programs" id="programs">
         <div class="programs-header">
             <h2 class="section-title">Образовательные программы</h2>
-            <p class="section-subtitle">Выберите направление, которое соответствует вашим интересам и карьерным целям</p>
+            <p class="section-subtitle">Подберите направление по интересам, коду или форме обучения</p>
             <div class="search-filter-container">
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="Поиск программы по названию или коду..." oninput="filterPrograms()">
                 </div>
-                <div class="filter-group">
-                    <button class="filter-btn active" data-filter="all" onclick="filterByLevel('all')">Все</button>
-                    <button class="filter-btn" data-filter="bachelor" onclick="filterByLevel('bachelor')">Бакалавриат</button>
-                    <button class="filter-btn" data-filter="specialist" onclick="filterByLevel('specialist')">Специалитет</button>
-                    <button class="filter-btn" data-filter="master" onclick="filterByLevel('master')">Магистратура</button>
-                </div>
-                <div class="filter-group">
-                    <button class="filter-btn active" data-form="all" onclick="filterByForm('all')">Все формы</button>
-                    <button class="filter-btn" data-form="full" onclick="filterByForm('full')">Очная</button>
-                    <button class="filter-btn" data-form="mixed" onclick="filterByForm('mixed')">Очно-заочная</button>
-                    <button class="filter-btn" data-form="part" onclick="filterByForm('part')">Заочная</button>
-                </div>
+                <select class="filter-select" id="levelFilterSelect" aria-label="Фильтр по уровню образования" onchange="filterByLevel(this.value)">
+                    <option value="all">Все уровни</option>
+                    <option value="basic">Высшее образование</option>
+                    <option value="specialized">Специализированное высшее</option>
+                </select>
+                <select class="filter-select" id="formFilterSelect" aria-label="Фильтр по форме обучения" onchange="filterByForm(this.value)">
+                    <option value="all">Все формы</option>
+                    <option value="full">Очная</option>
+                    <option value="mixed">Очно-заочная</option>
+                    <option value="part">Заочная</option>
+                </select>
             </div>
         </div>
         <div class="programs-grid" id="programsGrid">
             <!-- Programs will be loaded here -->
         </div>
+        <div class="programs-actions" id="programsActions" hidden>
+            <button class="programs-load-more" id="showMoreProgramsBtn" type="button" onclick="showMorePrograms()">Показать ещё</button>
+            <a class="programs-contact-link" href="#contacts">К приёмной комиссии</a>
+        </div>
     </section>
 
     <!-- How to Apply Section -->
     <section class="how-to-apply" id="how-to-apply">
-        <div class="container">
-            <h2 class="section-title">Как поступить</h2>
-            <p class="section-subtitle">Простой путь к вашему образованию в ИТТСУ</p>
-            <div class="steps-container">
-                <div class="steps">
-                    <div class="step-card">
-                        <div class="step-number">1</div>
-                        <h3>Выберите программу</h3>
-                        <p>Изучите все образовательные программы и выберите направление, которое соответствует вашим интересам</p>
+        <div class="apply-shell">
+            <div class="apply-heading">
+                <span>поступление</span>
+                <h2>Как поступить</h2>
+                <p>Сначала выберите программу и проверьте вступительные испытания, форму обучения и места. Затем подайте документы удобным способом.</p>
+            </div>
+            <div class="apply-routes">
+                <article class="apply-route">
+                    <div class="route-head">
+                        <div class="route-logo">
+                            <img src="images/gos.svg" alt="Госуслуги">
+                        </div>
+                        <div class="route-label">онлайн</div>
                     </div>
-                    <div class="step-card">
-                        <div class="step-number">2</div>
-                        <h3>Подайте документы</h3>
-                        <p>Подайте документы через портал Госуслуги или напрямую в приёмную комиссию РУТ (МИИТ)</p>
+                    <h3>Через Госуслуги</h3>
+                    <p>Подайте заявление дистанционно и отслеживайте статус в личном кабинете.</p>
+                    <a href="https://www.gosuslugi.ru/" target="_blank" rel="noopener">Перейти на Госуслуги</a>
+                </article>
+                <article class="apply-route">
+                    <div class="route-head">
+                        <div class="route-logo">
+                            <img src="images/rut.svg" alt="Российский университет транспорта">
+                        </div>
+                        <div class="route-label">очно</div>
                     </div>
-                    <div class="step-card">
-                        <div class="step-number">3</div>
-                        <h3>Пройдите испытания</h3>
-                        <p>Сдайте вступительные испытания и дождитесь результатов</p>
-                    </div>
-                </div>
-                <div class="apply-buttons">
-                    <a href="https://www.gosuslugi.ru/" target="_blank" class="btn btn-primary">📄 Подать документы на Госуслугах</a>
-                    <a href="#contacts" class="btn btn-secondary">📞 Контакты приёмной комиссии</a>
-                </div>
-                <div class="apply-deadline">
-                    <h4>📅 Сроки подачи документов</h4>
-                    <p>Приём документов на бюджет: до 25 июля<br>Приём документов на платное: до 30 августа</p>
-                </div>
+                    <h3>В приёмной комиссии</h3>
+                    <p>Приезжайте в ИЖТ РУТ, задайте вопросы по программе и подайте документы на месте.</p>
+                    <a href="#contacts">Посмотреть контакты</a>
+                </article>
+            </div>
+            <div class="apply-note">
+                <div>Перед подачей</div>
+                <p>Откройте карточку выбранной специальности и сверьте вступительные испытания, срок обучения, форму и количество мест.</p>
             </div>
         </div>
     </section>
@@ -161,36 +173,39 @@
     <!-- Contacts Section -->
     <section class="contacts" id="contacts">
         <div class="container">
-            <h2 class="section-title">Контакты</h2>
-            <p class="section-subtitle">Свяжитесь с нами для получения консультации по поступлению</p>
+            <div class="contacts-heading">
+                <div>
+                    <h2 class="section-title">Приёмная комиссия</h2>
+                    <p class="section-subtitle">Контакты для консультации по поступлению</p>
+                </div>
+                <a href="tel:+79452602332">Позвонить</a>
+            </div>
             <div class="contacts-container">
                 <div class="contacts-info">
-                    <h3>Приёмная комиссия РУТ (МИИТ)</h3>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div class="contact-details">
-                            <h4>Адрес</h4>
+                    <div class="contacts-lead">
+                        <h3>ИЖТ РУТ</h3>
+                        <p>Выберите удобный способ связи или откройте карту приёмной комиссии</p>
+                    </div>
+                    <div class="contact-actions">
+                        <a href="tel:+79452602332">Позвонить</a>
+                        <a href="mailto:pk@rut-miit.ru">Написать</a>
+                        <a href="https://yandex.ru/maps/?text=Москва%2C%20ул.%20Образцова%2C%20д.%209%2C%20стр.%209" target="_blank" rel="noopener">Карта</a>
+                    </div>
+                    <div class="contact-list">
+                        <div class="contact-row">
+                            <span>Адрес</span>
                             <p>г. Москва, ул. Образцова, д. 9, стр. 9</p>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <div class="contact-details">
-                            <h4>Телефон</h4>
+                        <div class="contact-row">
+                            <span>Телефон</span>
                             <a href="tel:+79452602332">+7 (495) 260-23-32</a>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">✉️</div>
-                        <div class="contact-details">
-                            <h4>Email</h4>
+                        <div class="contact-row">
+                            <span>Email</span>
                             <a href="mailto:pk@rut-miit.ru">pk@rut-miit.ru</a>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">🕐</div>
-                        <div class="contact-details">
-                            <h4>Режим работы</h4>
+                        <div class="contact-row">
+                            <span>Режим работы</span>
                             <p>Пн-Пт: 9:00 - 18:00<br>Сб: 10:00 - 15:00</p>
                         </div>
                     </div>
@@ -209,45 +224,28 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h4>ИТТСУ РУТ (МИИТ)</h4>
-                <p style="color: rgba(255,255,255,0.8); line-height: 1.7;">Институт транспортной техники и систем управления</p>
+                <h4>ИЖТ РУТ</h4>
+                <p class="footer-description">Институт железнодорожного транспорта</p>
             </div>
             <div class="footer-section">
-                <h4>Навигация</h4>
+                <h4>Связаться</h4>
                 <ul>
-                    <li><a href="#programs">Программы</a></li>
-                    <li><a href="#benefits">Преимущества</a></li>
-                    <li><a href="#how-to-apply">Как поступить</a></li>
-                    <li><a href="#contacts">Контакты</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Ресурсы</h4>
-                <ul>
-                    <li><a href="https://www.miit.ru/" target="_blank">Официальный сайт РУТ</a></li>
-                    <li><a href="https://www.gosuslugi.ru/" target="_blank">Портал Госуслуги</a></li>
-                    <li><a href="#">Политика обработки данных</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Социальные сети</h4>
-                <ul>
-                    <li><a href="https://vk.com/ittsu_rut" target="_blank" rel="noopener">ВКонтакте</a></li>
-                    <li><a href="https://t.me/ittsu_rut" target="_blank" rel="noopener">Telegram</a></li>
-                    <li><a href="https://max.ru/rut_live" target="_blank" rel="noopener">MAX</a></li>
+                    <li><a href="tel:+79452602332">Позвонить</a></li>
+                    <li><a href="mailto:pk@rut-miit.ru">Почта</a></li>
+                    <li><a href="#contacts">Приёмная комиссия</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 ИТТСУ РУТ (МИИТ). Все права защищены.</p>
-            <a href="https://www.miit.ru/" target="_blank">www.miit.ru</a>
+            <p>© 2026 ИЖТ РУТ. Все права защищены.</p>
+            <a href="https://www.miit.ru/" target="_blank" rel="noopener">www.miit.ru</a>
         </div>
     </footer>
 
     <!-- Modal -->
     <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
         <div class="modal-content" id="modalContent">
-            <button class="modal-close" onclick="closeModal()">×</button>
+            <button class="modal-close" onclick="closeModal()" aria-label="Закрыть"></button>
             <div id="modalBody"></div>
         </div>
     </div>
