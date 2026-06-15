@@ -1457,6 +1457,38 @@
         let currentFormFilter = 'all';
         const mobileProgramsQuery = window.matchMedia('(max-width: 768px)');
         const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const heroSlideSizes = '(max-width: 768px) calc(100vw - 32px), calc(100vw - 72px)';
+        const heroSlides = [
+            'p26',
+            'p1',
+            'p14',
+            'p8',
+            'p20',
+            'p3',
+            'p18',
+            'p11',
+            'p24',
+            'p5',
+            'p13',
+            'p7',
+            'p22',
+            'p16',
+            'p2',
+            'p25',
+            'p10',
+            'p4',
+            'p21',
+            'p12',
+            'p6',
+            'p17',
+            'p23',
+            'p9',
+            'p15',
+            'p19'
+        ].map(name => ({
+            src: `images/hero/${name}-1800.jpg`,
+            srcset: `images/hero/${name}-900.jpg 900w, images/hero/${name}-1800.jpg 1800w`
+        }));
         const mobileProgramBatchSize = 3;
         let mobileProgramsLimit = mobileProgramBatchSize;
         let lastFilteredPrograms = programs;
@@ -1608,6 +1640,82 @@
             return visiblePlaces
                 .map(place => `${escapeHtml(place.value)} ${escapeHtml(place.category)}`)
                 .join(' · ');
+        }
+
+        function setupHeroSlideshow() {
+            const slideshow = document.getElementById('heroSlideshow');
+            if (!slideshow || !heroSlides.length) return;
+
+            const renderHeroImageAttrs = (slide, index) => `
+                class="hero-slide${index === 0 ? ' active' : ''}"
+                src="${slide.src}"
+                srcset="${slide.srcset}"
+                sizes="${heroSlideSizes}"
+                alt=""
+                aria-hidden="true"
+                ${index === 0 ? 'fetchpriority="high"' : 'loading="lazy"'}
+                decoding="async"
+            `;
+
+            const applyHeroSlideImage = (image, slide) => {
+                image.srcset = slide.srcset;
+                image.sizes = heroSlideSizes;
+                image.src = slide.src;
+            };
+
+            const layerCount = reducedMotionQuery.matches || heroSlides.length === 1 ? 1 : 2;
+            slideshow.innerHTML = Array.from({ length: layerCount }, (_, index) => `
+                <img ${renderHeroImageAttrs(heroSlides[index] || heroSlides[0], index)}>
+            `).join('');
+
+            if (layerCount === 1) return;
+
+            const slides = Array.from(slideshow.querySelectorAll('.hero-slide'));
+            let activeLayer = 0;
+            let currentSlide = 0;
+            let nextSlide = 1;
+            let isTransitioning = false;
+            const transitionMs = 900;
+            const isImageReady = image => image.complete && image.naturalWidth > 0;
+
+            window.setInterval(() => {
+                if (isTransitioning) return;
+                isTransitioning = true;
+
+                const incomingLayer = 1 - activeLayer;
+                const incoming = slides[incomingLayer];
+                const outgoing = slides[activeLayer];
+
+                const showIncoming = () => {
+                    if (!isImageReady(incoming)) {
+                        nextSlide = (nextSlide + 1) % heroSlides.length;
+                        applyHeroSlideImage(incoming, heroSlides[nextSlide]);
+                        isTransitioning = false;
+                        return;
+                    }
+
+                    incoming.classList.add('active');
+                    outgoing.classList.remove('active');
+                    activeLayer = incomingLayer;
+                    currentSlide = nextSlide;
+                    nextSlide = (currentSlide + 1) % heroSlides.length;
+                    window.setTimeout(() => {
+                        applyHeroSlideImage(slides[1 - activeLayer], heroSlides[nextSlide]);
+                        isTransitioning = false;
+                    }, transitionMs);
+                };
+
+                if (isImageReady(incoming)) {
+                    showIncoming();
+                } else {
+                    incoming.addEventListener('load', showIncoming, { once: true });
+                    incoming.addEventListener('error', () => {
+                        nextSlide = (nextSlide + 1) % heroSlides.length;
+                        applyHeroSlideImage(incoming, heroSlides[nextSlide]);
+                        isTransitioning = false;
+                    }, { once: true });
+                }
+            }, 4300);
         }
 
         // Render programs
@@ -1804,12 +1912,6 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Toggle mobile nav
-        function toggleMobileNav() {
-            const nav = document.getElementById('mobileNav');
-            nav.classList.toggle('active');
-        }
-
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -1828,6 +1930,7 @@
         });
 
         // Initialize
+        setupHeroSlideshow();
         renderPrograms(programs);
         setupScrollReveal();
 

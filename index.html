@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ИЖТ РУТ - Образовательные программы</title>
+    <title>ИТТСУ РУТ - Образовательные программы</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -11,53 +11,52 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header class="site-header">
         <div class="header-content">
-            <a href="#" class="logo">
-                <img class="logo-mark" src="images/rut.svg" alt="Российский университет транспорта">
-                <div class="logo-texts">
-                    <div class="logo-university">РОССИЙСКИЙ УНИВЕРСИТЕТ ТРАНСПОРТА</div>
-                    <div class="logo-institute">Институт железнодорожного транспорта</div>
-                </div>
+            <a class="header-brand" href="https://www.rut-miit.ru/" target="_blank" rel="noopener" aria-label="Сайт Российского университета транспорта">
+                <img class="header-brand-graphic" src="update/head_update/graphics/130years-rut-ittsu.svg" alt="130 лет. Российский университет транспорта. Институт транспортной техники и систем управления">
             </a>
-            <nav>
+            <nav class="header-nav" aria-label="Основная навигация">
                 <ul>
-                    <li><a href="#programs">Специальности</a></li>
-                    <li><a href="#how-to-apply">Как поступить</a></li>
-                    <li><a href="#contacts">Приёмная комиссия</a></li>
+                    <li><a href="#programs">Образовательные программы</a></li>
+                    <li><a href="#how-to-apply">Подать документы</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
                 </ul>
             </nav>
-            <button class="mobile-menu-btn" onclick="toggleMobileNav()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
         </div>
     </header>
 
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav" id="mobileNav">
-        <ul>
-            <li><a href="#programs" onclick="toggleMobileNav()">Специальности</a></li>
-            <li><a href="#how-to-apply" onclick="toggleMobileNav()">Как поступить</a></li>
-            <li><a href="#contacts" onclick="toggleMobileNav()">Приёмная комиссия</a></li>
-        </ul>
-    </div>
-
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-eyebrow">Российский университет транспорта</div>
-            <h1>ИЖТ РУТ</h1>
-            <p>33 специальности для железнодорожного транспорта, инженерии, энергетики, безопасности, IT и управления</p>
-            <div class="hero-buttons">
-                <a href="#programs" class="btn btn-primary">Выбрать специальность</a>
-                <a href="#contacts" class="btn btn-outline">Приёмная комиссия</a>
+    <section class="hero" aria-label="ИТТСУ РУТ">
+        <div class="hero-shell">
+            <h1 class="sr-only">ИТТСУ РУТ</h1>
+            <div class="hero-slideshow" id="heroSlideshow" aria-label="Фотографии Российского университета транспорта">
+                <img
+                    class="hero-slide active"
+                    src="images/hero/p26-1800.jpg"
+                    srcset="images/hero/p26-900.jpg 900w, images/hero/p26-1800.jpg 1800w"
+                    sizes="(max-width: 768px) calc(100vw - 32px), calc(100vw - 72px)"
+                    alt=""
+                    fetchpriority="high"
+                    decoding="async"
+                >
             </div>
-            <div class="hero-stats" aria-label="Краткая информация">
-                <div><span>33</span>специальности</div>
-                <div><span>2</span>уровня образования</div>
-                <div><span>3</span>формы обучения</div>
+            <div class="hero-info" aria-label="Основные контакты">
+                <a class="hero-university-link" href="https://www.rut-miit.ru/" target="_blank" rel="noopener">Сайт университета</a>
+                <div class="hero-contact-card hero-admissions-card">
+                    <strong><a href="https://www.miit.ru/admissions/office" target="_blank" rel="noopener">Приёмная комиссия РУТ</a></strong>
+                    <span>ул. Новосущёвская, 22с2</span>
+                    <span>+7 (495) 260-23-32</span>
+                    <span>pk@miit.ru</span>
+                    <span>с 09:30 до 16:30</span>
+                </div>
+                <div class="hero-contact-card hero-consultant-card">
+                    <strong>Консультант по поступлению</strong>
+                    <span class="consultant-name">Илья Журавлев</span>
+                    <a href="mailto:ittsu@rut-miit.ru">ittsu@rut-miit.ru</a>
+                    <a href="tel:+79168833483">+7 (916) 883-34-83</a>
+                    <span>Пн-пт 10:00 - 18:00</span>
+                </div>
             </div>
         </div>
     </section>
@@ -65,7 +64,7 @@
     <!-- Benefits Section
     <section class="benefits" id="benefits">
         <div class="container">
-            <h2 class="section-title">Почему выбирают ИЖТ РУТ</h2>
+            <h2 class="section-title">Почему выбирают ИТТСУ РУТ</h2>
             <p class="section-subtitle">Специалисты для транспортной отрасли</p>
             <div class="benefits-grid">
                 <div class="benefit-card">
@@ -159,7 +158,7 @@
                         <div class="route-label">очно</div>
                     </div>
                     <h3>В приёмной комиссии</h3>
-                    <p>Приезжайте в ИЖТ РУТ, задайте вопросы по программе и подайте документы на месте.</p>
+                    <p>Приезжайте в ИТТСУ РУТ, задайте вопросы по программе и подайте документы на месте.</p>
                     <a href="#contacts">Посмотреть контакты</a>
                 </article>
             </div>
@@ -178,40 +177,40 @@
                     <h2 class="section-title">Приёмная комиссия</h2>
                     <p class="section-subtitle">Контакты для консультации по поступлению</p>
                 </div>
-                <a href="tel:+79452602332">Позвонить</a>
+                <a href="tel:+74952602332">Позвонить</a>
             </div>
             <div class="contacts-container">
                 <div class="contacts-info">
                     <div class="contacts-lead">
-                        <h3>ИЖТ РУТ</h3>
+                        <h3>ИТТСУ РУТ</h3>
                         <p>Выберите удобный способ связи или откройте карту приёмной комиссии</p>
                     </div>
                     <div class="contact-actions">
-                        <a href="tel:+79452602332">Позвонить</a>
-                        <a href="mailto:pk@rut-miit.ru">Написать</a>
-                        <a href="https://yandex.ru/maps/?text=Москва%2C%20ул.%20Образцова%2C%20д.%209%2C%20стр.%209" target="_blank" rel="noopener">Карта</a>
+                        <a href="tel:+74952602332">Позвонить</a>
+                        <a href="mailto:pk@miit.ru">Написать</a>
+                        <a href="https://yandex.ru/maps/?text=Москва%2C%20ул.%20Новосущёвская%2C%2022с2" target="_blank" rel="noopener">Карта</a>
                     </div>
                     <div class="contact-list">
                         <div class="contact-row">
                             <span>Адрес</span>
-                            <p>г. Москва, ул. Образцова, д. 9, стр. 9</p>
+                            <p>г. Москва, ул. Новосущёвская, 22с2</p>
                         </div>
                         <div class="contact-row">
                             <span>Телефон</span>
-                            <a href="tel:+79452602332">+7 (495) 260-23-32</a>
+                            <a href="tel:+74952602332">+7 (495) 260-23-32</a>
                         </div>
                         <div class="contact-row">
                             <span>Email</span>
-                            <a href="mailto:pk@rut-miit.ru">pk@rut-miit.ru</a>
+                            <a href="mailto:pk@miit.ru">pk@miit.ru</a>
                         </div>
                         <div class="contact-row">
                             <span>Режим работы</span>
-                            <p>Пн-Пт: 9:00 - 18:00<br>Сб: 10:00 - 15:00</p>
+                            <p>ежедневно с 09:30 до 16:30</p>
                         </div>
                     </div>
                 </div>
                 <div class="map-container">
-                    <a class="map-link" href="https://yandex.ru/maps/?text=Москва%2C%20ул.%20Образцова%2C%20д.%209%2C%20стр.%209" target="_blank" rel="noopener">
+                    <a class="map-link" href="https://yandex.ru/maps/?text=Москва%2C%20ул.%20Новосущёвская%2C%2022с2" target="_blank" rel="noopener">
                         <img src="images/map.jpg" alt="Карта проезда к РУТ (МИИТ)">
                         <span class="map-overlay">Открыть в Яндекс.Картах</span>
                     </a>
@@ -224,21 +223,21 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h4>ИЖТ РУТ</h4>
-                <p class="footer-description">Институт железнодорожного транспорта</p>
+                <h4>ИТТСУ РУТ</h4>
+                <p class="footer-description">Институт транспортной техники и систем управления</p>
             </div>
             <div class="footer-section">
                 <h4>Связаться</h4>
                 <ul>
-                    <li><a href="tel:+79452602332">Позвонить</a></li>
-                    <li><a href="mailto:pk@rut-miit.ru">Почта</a></li>
+                    <li><a href="tel:+74952602332">Позвонить</a></li>
+                    <li><a href="mailto:pk@miit.ru">Почта</a></li>
                     <li><a href="#contacts">Приёмная комиссия</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2026 ИЖТ РУТ. Все права защищены.</p>
-            <a href="https://www.miit.ru/" target="_blank" rel="noopener">www.miit.ru</a>
+            <p>© 2026 ИТТСУ РУТ. Все права защищены.</p>
+            <a href="https://www.rut-miit.ru/" target="_blank" rel="noopener">www.rut-miit.ru</a>
         </div>
     </footer>
 
