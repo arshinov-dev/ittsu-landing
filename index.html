@@ -111,6 +111,7 @@
                 <select class="filter-select" id="levelFilterSelect" aria-label="Фильтр по уровню образования" onchange="filterByLevel(this.value)">
                     <option value="all">Все уровни</option>
                     <option value="basic">Высшее образование</option>
+                    <option value="bachelor">Бакалавриат</option>
                     <option value="specialized">Специализированное высшее</option>
                 </select>
                 <select class="filter-select" id="formFilterSelect" aria-label="Фильтр по форме обучения" onchange="filterByForm(this.value)">
@@ -124,19 +125,18 @@
         <div class="programs-grid" id="programsGrid">
             <!-- Programs will be loaded here -->
         </div>
-        <div class="programs-actions" id="programsActions" hidden>
-            <button class="programs-load-more" id="showMoreProgramsBtn" type="button" onclick="showMorePrograms()">Показать ещё</button>
-            <a class="programs-contact-link" href="#contacts">К приёмной комиссии</a>
-        </div>
     </section>
 
     <!-- How to Apply Section -->
     <section class="how-to-apply" id="how-to-apply">
         <div class="apply-shell">
             <div class="apply-heading">
-                <span>поступление</span>
-                <h2>Как поступить</h2>
-                <p>Сначала выберите программу и проверьте вступительные испытания, форму обучения и места. Затем подайте документы удобным способом.</p>
+                <span class="section-kicker">поступление</span>
+                <h2>
+                    <span>Способы подачи</span>
+                    <span>документов</span>
+                    <span>на поступление</span>
+                </h2>
             </div>
             <div class="apply-routes">
                 <article class="apply-route">
@@ -158,86 +158,82 @@
                         <div class="route-label">очно</div>
                     </div>
                     <h3>В приёмной комиссии</h3>
-                    <p>Приезжайте в ИТТСУ РУТ, задайте вопросы по программе и подайте документы на месте.</p>
+                    <p>Приезжайте в РУТ, задайте вопросы по программе и подайте документы на месте.</p>
                     <a href="#contacts">Посмотреть контакты</a>
                 </article>
-            </div>
-            <div class="apply-note">
-                <div>Перед подачей</div>
-                <p>Откройте карточку выбранной специальности и сверьте вступительные испытания, срок обучения, форму и количество мест.</p>
             </div>
         </div>
     </section>
 
     <!-- Contacts Section -->
     <section class="contacts" id="contacts">
-        <div class="container">
-            <div class="contacts-heading">
-                <div>
-                    <h2 class="section-title">Приёмная комиссия</h2>
-                    <p class="section-subtitle">Контакты для консультации по поступлению</p>
+        <div class="contacts-shell">
+            <article class="footer-contact-card">
+                <div class="footer-contact-head">
+                    <span>документы</span>
+                    <h2>Приёмная комиссия</h2>
                 </div>
-                <a href="tel:+74952602332">Позвонить</a>
-            </div>
-            <div class="contacts-container">
-                <div class="contacts-info">
-                    <div class="contacts-lead">
-                        <h3>ИТТСУ РУТ</h3>
-                        <p>Выберите удобный способ связи или откройте карту приёмной комиссии</p>
-                    </div>
-                    <div class="contact-actions">
-                        <a href="tel:+74952602332">Позвонить</a>
-                        <a href="mailto:pk@miit.ru">Написать</a>
-                        <a href="https://yandex.ru/maps/?text=Москва%2C%20ул.%20Новосущёвская%2C%2022с2" target="_blank" rel="noopener">Карта</a>
-                    </div>
-                    <div class="contact-list">
-                        <div class="contact-row">
-                            <span>Адрес</span>
-                            <p>г. Москва, ул. Новосущёвская, 22с2</p>
-                        </div>
-                        <div class="contact-row">
-                            <span>Телефон</span>
-                            <a href="tel:+74952602332">+7 (495) 260-23-32</a>
-                        </div>
-                        <div class="contact-row">
-                            <span>Email</span>
-                            <a href="mailto:pk@miit.ru">pk@miit.ru</a>
-                        </div>
-                        <div class="contact-row">
-                            <span>Режим работы</span>
-                            <p>ежедневно с 09:30 до 16:30</p>
-                        </div>
-                    </div>
+                <div class="footer-contact-text">
+                    <span>ул. Новосущёвская 22с2</span>
+                    <a href="tel:+74952602332">+7 (495) 260-23-32</a>
+                    <a href="mailto:pk@miit.ru">pk@miit.ru</a>
+                    <span>с 09:30 до 16:30</span>
                 </div>
-                <div class="map-container">
-                    <a class="map-link" href="https://yandex.ru/maps/?text=Москва%2C%20ул.%20Новосущёвская%2C%2022с2" target="_blank" rel="noopener">
-                        <img src="images/map.jpg" alt="Карта проезда к РУТ (МИИТ)">
-                        <span class="map-overlay">Открыть в Яндекс.Картах</span>
-                    </a>
+            </article>
+            <article class="footer-contact-card">
+                <div class="footer-contact-head">
+                    <span>консультация</span>
+                    <h2>Консультант по поступлению</h2>
+                </div>
+                <div class="footer-contact-text">
+                    <strong>Илья Журавлев</strong>
+                    <a href="mailto:ittsu@rut-miit.ru">ittsu@rut-miit.ru</a>
+                    <a href="tel:+79168833483">+7 (916) 883-34-83</a>
+                    <span>пн-пт 10:00 - 18:00</span>
+                </div>
+            </article>
+            <a class="footer-map-card" href="https://yandex.ru/maps/?text=Москва%2C%20ул.%20Новосущёвская%2C%2022с2" target="_blank" rel="noopener" aria-label="Открыть карту приёмной комиссии">
+                <img
+                    src="images/map-700.jpg"
+                    srcset="images/map-700.jpg 700w, images/map-1200.jpg 1200w, images/map.jpg 1500w"
+                    sizes="(max-width: 768px) calc(100vw - 32px), 620px"
+                    alt="Карта проезда к приёмной комиссии РУТ"
+                    loading="lazy"
+                    decoding="async"
+                >
+                <div class="footer-map-caption">
+                    <strong>Карта проезда</strong>
+                    <span>ул. Новосущёвская, 22с2</span>
+                </div>
+                <span class="footer-map-button">Открыть карту</span>
+            </a>
+            <div class="contacts-blue-band">
+                <span>Приёмная комиссия РУТ</span>
+                <div class="contacts-band-actions">
+                    <a href="tel:+74952602332">Позвонить</a>
+                    <a href="mailto:pk@miit.ru">Написать</a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>ИТТСУ РУТ</h4>
-                <p class="footer-description">Институт транспортной техники и систем управления</p>
+    <footer class="site-footer">
+        <div class="site-footer-panel">
+            <a class="footer-brand" href="https://www.rut-miit.ru/" target="_blank" rel="noopener" aria-label="Сайт Российского университета транспорта">
+                <img src="update/head_update/graphics/130years-rut-ittsu.svg" alt="130 лет. Российский университет транспорта. Институт транспортной техники и систем управления">
+            </a>
+            <div class="footer-socials" aria-label="Социальные сети ИТТСУ">
+                <a href="https://max.ru/join/PMTtvDi0QGEptCC274DjaJgFAcaWNSdRydJeCyzutKc" target="_blank" rel="noopener" aria-label="ИТТСУ в MAX">
+                    <img src="update/head_update/graphics/max.svg" alt="">
+                </a>
+                <a href="https://vk.com/ittsu_rut" target="_blank" rel="noopener" aria-label="ИТТСУ во ВКонтакте">
+                    <img src="update/head_update/graphics/vk.svg" alt="">
+                </a>
+                <a href="tg://resolve?domain=ittsu_rut" aria-label="ИТТСУ в Telegram">
+                    <img src="update/head_update/graphics/tg.svg" alt="">
+                </a>
             </div>
-            <div class="footer-section">
-                <h4>Связаться</h4>
-                <ul>
-                    <li><a href="tel:+74952602332">Позвонить</a></li>
-                    <li><a href="mailto:pk@miit.ru">Почта</a></li>
-                    <li><a href="#contacts">Приёмная комиссия</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2026 ИТТСУ РУТ. Все права защищены.</p>
-            <a href="https://www.rut-miit.ru/" target="_blank" rel="noopener">www.rut-miit.ru</a>
         </div>
     </footer>
 
@@ -248,6 +244,10 @@
             <div id="modalBody"></div>
         </div>
     </div>
+
+    <button class="back-to-top" type="button" aria-label="Вернуться наверх">
+        <span aria-hidden="true">↑</span>
+    </button>
 
     <script src="script.js"></script>
 </body>

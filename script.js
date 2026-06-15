@@ -48,7 +48,7 @@
                 "id": 2,
                 "number": "02",
                 "code": "23.05.01",
-                "title": "Подъёмно-транспортные, строительные дорожные средства и оборудование",
+                "title": "Подъёмно-транспортные, строительные, дорожные средства и оборудование",
                 "specialtyTitle": "Наземные транспортно-технологические средства",
                 "level": "basic",
                 "levelName": "высшее образование (базовое)",
@@ -571,10 +571,11 @@
                 "number": "14",
                 "code": "13.03.02",
                 "title": "Интеллектуальные электротехнические транспортные системы",
-                "specialtyTitle": "Электроэнергетика и электротехника [ТОЛЬКО ДЛЯ ИНОСТРАНЦЕВ]",
-                "level": "basic",
-                "levelName": "высшее образование (базовое)",
-                "levelShortName": "Высшее образование",
+                "specialtyTitle": "Электроэнергетика и электротехника",
+                "foreignOnly": true,
+                "level": "bachelor",
+                "levelName": "бакалавриат",
+                "levelShortName": "Бакалавриат",
                 "form": "full",
                 "formName": "очная",
                 "formDisplayName": "Очная",
@@ -790,10 +791,11 @@
                 "number": "19",
                 "code": "27.03.04",
                 "title": "Системы, методы и средства цифровизации и управления",
-                "specialtyTitle": "Управление в технических системах [ТОЛЬКО ДЛЯ ИНОСТРАНЦЕВ]",
-                "level": "basic",
-                "levelName": "высшее образование (базовое)",
-                "levelShortName": "Высшее образование",
+                "specialtyTitle": "Управление в технических системах",
+                "foreignOnly": true,
+                "level": "bachelor",
+                "levelName": "бакалавриат",
+                "levelShortName": "Бакалавриат",
                 "form": "full",
                 "formName": "очная",
                 "formDisplayName": "Очная",
@@ -1071,7 +1073,7 @@
                 "form": "part",
                 "formName": "заочная",
                 "formDisplayName": "Заочная",
-                "duration": "2,5 года",
+                "duration": "2.5 года",
                 "places": "0/0/35",
                 "placesLabel": "Места (общий конкурс/целевое/платные)",
                 "generalPlaces": "0",
@@ -1244,7 +1246,7 @@
                 "form": "mixed",
                 "formName": "очно-заочная",
                 "formDisplayName": "Очно-заочная",
-                "duration": "2,5 года",
+                "duration": "2.5 года",
                 "places": "0/0/35",
                 "placesLabel": "Места (общий конкурс/целевое/платные)",
                 "generalPlaces": "0",
@@ -1366,7 +1368,7 @@
                 "id": 32,
                 "number": "32",
                 "code": "27.04.05",
-                "title": "Аналитика для цифровой трансформации",
+                "title": "Аналитика для цифровой трансформации на транспорте",
                 "specialtyTitle": "Инноватика",
                 "level": "specialized",
                 "levelName": "специализированное высшее образование",
@@ -1458,6 +1460,17 @@
         const mobileProgramsQuery = window.matchMedia('(max-width: 768px)');
         const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         const heroSlideSizes = '(max-width: 768px) calc(100vw - 32px), calc(100vw - 72px)';
+        const programImageSizes = {
+            cover: '(max-width: 768px) calc(100vw - 32px), 420px',
+            modalCover: '(max-width: 768px) calc(100vw - 56px), 520px',
+            professions: '(max-width: 768px) calc(100vw - 56px), 760px'
+        };
+        const foreignProgramNote = 'Места для приема иностранных граждан и лиц без гражданства';
+        const mobileProgramInitialLimits = {
+            basic: 2,
+            specialized: 2,
+            bachelor: 2
+        };
         const heroSlides = [
             'p26',
             'p1',
@@ -1490,7 +1503,7 @@
             srcset: `images/hero/${name}-900.jpg 900w, images/hero/${name}-1800.jpg 1800w`
         }));
         const mobileProgramBatchSize = 3;
-        let mobileProgramsLimit = mobileProgramBatchSize;
+        let mobileProgramLimits = { ...mobileProgramInitialLimits };
         let lastFilteredPrograms = programs;
         let revealObserver;
 
@@ -1512,9 +1525,21 @@
         }
 
         function formatSpecialtyTitle(value) {
-            return String(value)
-                .replace(/\s*\[ТОЛЬКО ДЛЯ ИНОСТРАНЦЕВ\]\s*/gi, '')
-                .trim();
+            return String(value).trim();
+        }
+
+        function isForeignProgram(program) {
+            return program.foreignOnly === true;
+        }
+
+        function getProgramImage(program, kind, width) {
+            return `images/programs/${program.number}-${kind}-${width}.jpg`;
+        }
+
+        function getProgramImageSrcset(program, kind, widths) {
+            return widths
+                .map(width => `${getProgramImage(program, kind, width)} ${width}w`)
+                .join(', ');
         }
 
         function getPlacesBreakdown(program) {
@@ -1596,10 +1621,9 @@
                 '.program-card',
                 '.apply-heading',
                 '.apply-route',
-                '.apply-note',
-                '.contacts-heading',
-                '.contacts-info',
-                '.map-container'
+                '.footer-contact-card',
+                '.footer-map-card',
+                '.site-footer-panel'
             ].join(','));
 
             if (reducedMotionQuery.matches) {
@@ -1718,65 +1742,138 @@
             }, 4300);
         }
 
+        function createProgramCard(program, index) {
+            const card = document.createElement('div');
+            const revealDelay = Math.min(index, 6) * 35;
+            const foreignLevelTag = isForeignProgram(program)
+                ? `<span>${escapeHtml(program.levelShortName.toLowerCase())}</span>`
+                : '';
+            const foreignNote = isForeignProgram(program)
+                ? `<p class="program-foreign-note">${escapeHtml(foreignProgramNote)}</p>`
+                : '';
+
+            card.className = 'program-card';
+            card.style.setProperty('--reveal-delay', `${revealDelay}ms`);
+            card.onclick = () => openModal(program);
+
+            card.innerHTML = `
+                <div class="program-image">
+                    <img
+                        src="${escapeHtml(getProgramImage(program, 'cover', 640))}"
+                        srcset="${escapeHtml(getProgramImageSrcset(program, 'cover', [640, 1200]))}"
+                        sizes="${escapeHtml(programImageSizes.cover)}"
+                        alt="${escapeHtml(program.title)}"
+                        loading="lazy"
+                        decoding="async"
+                    >
+                    <div class="program-image-tags" aria-label="Срок и форма обучения">
+                        <span>${escapeHtml(program.duration)}</span>
+                        <span>${escapeHtml(program.formName)}</span>
+                        ${foreignLevelTag}
+                    </div>
+                </div>
+                <div class="program-content">
+                    <div class="program-code">
+                        <span class="program-code-value">${escapeHtml(program.code)}</span>
+                        <span class="program-direction">${escapeHtml(formatSpecialtyTitle(program.specialtyTitle))}</span>
+                    </div>
+                    <h3 class="program-title">${escapeHtml(program.title)}</h3>
+                    ${foreignNote}
+                    <button class="program-btn" type="button">Подробнее</button>
+                </div>
+            `;
+
+            observeReveal(card, revealDelay);
+            return card;
+        }
+
+        function appendProgramGroup(container, title, groupPrograms, options = {}) {
+            if (!groupPrograms.length) return;
+
+            const section = document.createElement('section');
+            const remainingCount = Math.max((options.total || groupPrograms.length) - groupPrograms.length, 0);
+            const actionMarkup = options.showMore
+                ? `
+                    <div class="program-group-actions">
+                        <button class="programs-load-more" type="button" onclick="showMorePrograms('${escapeHtml(options.level)}')">
+                            Показать ещё (${remainingCount})
+                        </button>
+                    </div>
+                `
+                : '';
+
+            section.className = ['program-group', options.className].filter(Boolean).join(' ');
+            section.innerHTML = `
+                <h3 class="program-group-title">${escapeHtml(title)}</h3>
+                <div class="program-group-grid"></div>
+                ${actionMarkup}
+            `;
+
+            const groupGrid = section.querySelector('.program-group-grid');
+            groupPrograms.forEach((program, index) => {
+                groupGrid.appendChild(createProgramCard(program, (options.offset || 0) + index));
+            });
+
+            container.appendChild(section);
+        }
+
         // Render programs
         function renderPrograms(programsToRender) {
             const grid = document.getElementById('programsGrid');
             grid.innerHTML = '';
             lastFilteredPrograms = programsToRender;
 
+            const foreignPrograms = programsToRender.filter(isForeignProgram);
+            const regularPrograms = programsToRender.filter(program => !isForeignProgram(program));
             const shouldLimitPrograms = mobileProgramsQuery.matches;
-            const visiblePrograms = shouldLimitPrograms
-                ? programsToRender.slice(0, mobileProgramsLimit)
-                : programsToRender;
+            const programGroups = [
+                { level: 'basic', title: 'Высшее образование' },
+                { level: 'specialized', title: 'Специализированное высшее образование' },
+                { level: 'bachelor', title: 'Бакалавриат' }
+            ];
 
-            visiblePrograms.forEach((program, index) => {
-                const card = document.createElement('div');
-                card.className = 'program-card';
-                card.style.setProperty('--reveal-delay', `${Math.min(index, 6) * 35}ms`);
-                card.onclick = () => openModal(program);
+            let renderedRegularCount = 0;
+            programGroups.forEach(group => {
+                const groupPrograms = regularPrograms.filter(program => program.level === group.level);
+                const groupLimit = mobileProgramLimits[group.level] || mobileProgramInitialLimits[group.level] || mobileProgramBatchSize;
+                const visibleGroupPrograms = shouldLimitPrograms
+                    ? groupPrograms.slice(0, groupLimit)
+                    : groupPrograms;
 
-                const badgeClass = program.level === 'basic' ? 'badge-basic' : 'badge-specialized';
-
-                card.innerHTML = `
-                    <div class="program-image">
-                        <img src="${escapeHtml(program.cardImage)}" alt="${escapeHtml(program.title)}" loading="lazy">
-                        <span class="program-level-badge ${badgeClass}">${escapeHtml(program.levelShortName)}</span>
-                    </div>
-                    <div class="program-content">
-                        <div class="program-code">
-                            <span class="program-code-value">${escapeHtml(program.code)}</span>
-                            <span class="program-direction">${escapeHtml(formatSpecialtyTitle(program.specialtyTitle))}</span>
-                        </div>
-                        <h3 class="program-title">${escapeHtml(program.title)}</h3>
-                        <button class="program-btn" type="button">Подробнее</button>
-                    </div>
-                `;
-
-                grid.appendChild(card);
-                observeReveal(card, Math.min(index, 6) * 35);
+                appendProgramGroup(grid, group.title, visibleGroupPrograms, {
+                    level: group.level,
+                    total: groupPrograms.length,
+                    showMore: shouldLimitPrograms && visibleGroupPrograms.length < groupPrograms.length,
+                    offset: renderedRegularCount
+                });
+                renderedRegularCount += visibleGroupPrograms.length;
             });
 
-            updateProgramsActions(programsToRender.length, visiblePrograms.length, shouldLimitPrograms);
+            appendProgramGroup(grid, 'Образовательные программы для иностранных граждан', foreignPrograms, {
+                className: 'program-foreign-section',
+                offset: renderedRegularCount
+            });
+
+            if (!regularPrograms.length && !foreignPrograms.length) {
+                grid.innerHTML = '<p class="programs-empty">По выбранным фильтрам программы не найдены.</p>';
+            }
+
         }
 
-        function updateProgramsActions(totalPrograms, visiblePrograms, shouldLimitPrograms) {
-            const actions = document.getElementById('programsActions');
-            const showMoreButton = document.getElementById('showMoreProgramsBtn');
-            if (!actions || !showMoreButton) return;
-
-            actions.hidden = !shouldLimitPrograms;
-            showMoreButton.hidden = !shouldLimitPrograms || visiblePrograms >= totalPrograms;
-            showMoreButton.textContent = `Показать ещё (${Math.max(totalPrograms - visiblePrograms, 0)})`;
+        function resetMobileProgramLimits() {
+            mobileProgramLimits = { ...mobileProgramInitialLimits };
         }
 
-        function showMorePrograms() {
-            mobileProgramsLimit += mobileProgramBatchSize;
+        function showMorePrograms(level) {
+            if (!level) return;
+            mobileProgramLimits[level] = (mobileProgramLimits[level] || mobileProgramInitialLimits[level] || 0) + mobileProgramBatchSize;
             renderPrograms(lastFilteredPrograms);
         }
 
         // Filter by level
         function filterByLevel(level) {
             currentLevelFilter = level;
+            resetMobileProgramLimits();
 
             const levelSelect = document.getElementById('levelFilterSelect');
             if (levelSelect && levelSelect.value !== level) {
@@ -1789,6 +1886,7 @@
         // Filter by form
         function filterByForm(form) {
             currentFormFilter = form;
+            resetMobileProgramLimits();
 
             const formSelect = document.getElementById('formFilterSelect');
             if (formSelect && formSelect.value !== form) {
@@ -1801,7 +1899,7 @@
         // Filter programs
         function filterPrograms() {
             const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
-            mobileProgramsLimit = mobileProgramBatchSize;
+            resetMobileProgramLimits();
 
             const filtered = programs.filter(program => {
                 const searchHaystack = [
@@ -1823,7 +1921,7 @@
         }
 
         function handleProgramsViewportChange() {
-            mobileProgramsLimit = mobileProgramBatchSize;
+            resetMobileProgramLimits();
             renderPrograms(lastFilteredPrograms);
         }
 
@@ -1837,7 +1935,7 @@
                     <section class="modal-left">
                         <div class="modal-hero">
                             <div class="modal-hero-title">${formatTitleHtml(program.title)}</div>
-                            <div class="modal-hero-subtitle">${escapeHtml(program.code)} ${escapeHtml(program.specialtyTitle)}</div>
+                            <div class="modal-hero-subtitle">${escapeHtml(program.code)} ${escapeHtml(formatSpecialtyTitle(program.specialtyTitle))}</div>
                         </div>
 
                         <div class="modal-info-bar">
@@ -1868,14 +1966,28 @@
                             <p>${escapeHtml(program.about)}</p>
                         </div>
                         <div class="modal-about-image">
-                            <img src="${escapeHtml(program.aboutImage)}" alt="${escapeHtml(program.title)}" loading="lazy">
+                            <img
+                                src="${escapeHtml(getProgramImage(program, 'cover', 640))}"
+                                srcset="${escapeHtml(getProgramImageSrcset(program, 'cover', [640, 1200]))}"
+                                sizes="${escapeHtml(programImageSizes.modalCover)}"
+                                alt="${escapeHtml(program.title)}"
+                                loading="lazy"
+                                decoding="async"
+                            >
                         </div>
                     </section>
 
                     <section class="modal-right">
                         <div class="modal-section-bar">осваиваемые профессии</div>
                         <div class="modal-professions ${getProfessionsClass(program)}">
-                            <img src="${escapeHtml(program.professionsImage)}" alt="осваиваемые профессии: ${escapeHtml(program.title)}" loading="lazy">
+                            <img
+                                src="${escapeHtml(getProgramImage(program, 'professions', 900))}"
+                                srcset="${escapeHtml(getProgramImageSrcset(program, 'professions', [900, 1400]))}"
+                                sizes="${escapeHtml(programImageSizes.professions)}"
+                                alt="осваиваемые профессии: ${escapeHtml(program.title)}"
+                                loading="lazy"
+                                decoding="async"
+                            >
                             <div class="modal-professions-tags">
                                 ${program.professions.map(prof => `<span class="modal-profession-tag">${escapeHtml(prof)}</span>`).join('')}
                             </div>
@@ -1929,10 +2041,30 @@
             });
         });
 
+        function setupBackToTop() {
+            const button = document.querySelector('.back-to-top');
+            if (!button) return;
+
+            const updateVisibility = () => {
+                button.classList.toggle('is-visible', window.scrollY > 620);
+            };
+
+            button.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: reducedMotionQuery.matches ? 'auto' : 'smooth'
+                });
+            });
+
+            window.addEventListener('scroll', updateVisibility, { passive: true });
+            updateVisibility();
+        }
+
         // Initialize
         setupHeroSlideshow();
         renderPrograms(programs);
         setupScrollReveal();
+        setupBackToTop();
 
         if (mobileProgramsQuery.addEventListener) {
             mobileProgramsQuery.addEventListener('change', handleProgramsViewportChange);
