@@ -195,19 +195,19 @@
 
         .hero-slide {
             position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            inset: -2px;
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
             object-fit: cover;
             object-position: center center;
             opacity: 0;
-            transform: scale(1.015);
+            transform: scale(1.035);
             transition: opacity 0.85s ease, transform 5.8s ease;
         }
 
         .hero-slide.active {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1.018);
         }
 
         .hero-info {
@@ -684,11 +684,18 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transform: scale(var(--program-image-scale, 1));
+            transform-origin: center center;
             transition: transform 0.3s ease;
         }
 
         .program-card:hover .program-image img {
-            transform: scale(1.05);
+            transform: scale(var(--program-image-hover-scale, 1.05));
+        }
+
+        .program-image--edge-crop img {
+            --program-image-scale: 1.06;
+            --program-image-hover-scale: 1.1;
         }
 
         .program-image-tags {
@@ -1195,7 +1202,13 @@
             width: 100%;
             height: clamp(160px, 13vw, 220px);
             object-fit: cover;
+            transform: scale(var(--modal-about-image-scale, 1));
+            transform-origin: center center;
             display: block;
+        }
+
+        .modal-about-image--edge-crop img {
+            --modal-about-image-scale: 1.06;
         }
 
         .modal-right {

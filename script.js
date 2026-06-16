@@ -1692,6 +1692,10 @@
             return `places-count-${getPlacesBreakdown(program).length}`;
         }
 
+        function needsCoverEdgeCrop(program) {
+            return ['15', '24'].includes(String(program.number));
+        }
+
         function observeReveal(element, delay = 0) {
             if (!element) return;
 
@@ -1852,13 +1856,14 @@
             const foreignNote = isForeignProgram(program)
                 ? `<p class="program-foreign-note">${escapeHtml(foreignProgramNote)}</p>`
                 : '';
+            const coverEdgeCropClass = needsCoverEdgeCrop(program) ? ' program-image--edge-crop' : '';
 
             card.className = 'program-card';
             card.style.setProperty('--reveal-delay', `${revealDelay}ms`);
             card.onclick = () => openModal(program);
 
             card.innerHTML = `
-                <div class="program-image">
+                <div class="program-image${coverEdgeCropClass}">
                     <img
                         src="${escapeHtml(getProgramImage(program, 'cover', 640))}"
                         srcset="${escapeHtml(getProgramImageSrcset(program, 'cover', [640, 1200]))}"
@@ -2040,6 +2045,7 @@
         function openModal(program) {
             const modal = document.getElementById('modalOverlay');
             const modalBody = document.getElementById('modalBody');
+            const aboutImageEdgeCropClass = needsCoverEdgeCrop(program) ? ' modal-about-image--edge-crop' : '';
 
             modalBody.innerHTML = `
                 <div class="modal-layout">
@@ -2075,7 +2081,7 @@
                         <div class="modal-about-text">
                             <p>${escapeHtml(program.about)}</p>
                         </div>
-                        <div class="modal-about-image">
+                        <div class="modal-about-image${aboutImageEdgeCropClass}">
                             <img
                                 src="${escapeHtml(getProgramImage(program, 'cover', 640))}"
                                 srcset="${escapeHtml(getProgramImageSrcset(program, 'cover', [640, 1200]))}"
