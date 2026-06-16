@@ -2221,8 +2221,8 @@
 
             .modal-about-text {
                 order: 5;
-                font-size: 14px;
-                line-height: 1.35;
+                font-size: 16px;
+                line-height: 1.28;
             }
 
             .modal-about-image {
@@ -2285,8 +2285,8 @@
 
             .modal-competencies {
                 margin-left: 22px;
-                font-size: 17px;
-                line-height: 1.18;
+                font-size: 16px;
+                line-height: 1.28;
             }
 
             .how-to-apply {
