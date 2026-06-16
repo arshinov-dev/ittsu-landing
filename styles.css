@@ -2135,25 +2135,32 @@
             }
 
             .modal-info-bar {
-                --modal-info-font-size: 14px;
+                --modal-info-font-size: 12px;
                 order: 3;
                 grid-template-columns: 1fr;
-                padding: 14px;
-                gap: 10px;
+                min-height: auto;
+                padding: 14px 16px;
+                gap: 0;
                 border-radius: 14px;
             }
 
             .info-cell {
                 min-height: auto;
-                grid-template-rows: auto auto;
-                justify-content: flex-start;
+                display: grid;
+                grid-template-columns: minmax(82px, 0.8fr) minmax(0, 1.2fr);
+                justify-content: stretch;
                 align-items: center;
-                gap: 6px;
-                padding: 12px;
-                border-radius: 10px;
-                background: rgba(255, 255, 255, 0.1);
+                gap: 10px;
+                padding: 7px 0;
+                border-radius: 0;
+                background: transparent;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.22);
                 align-content: center;
                 text-align: center;
+            }
+
+            .info-cell:last-child {
+                border-bottom: 0;
             }
 
             .modal-info-label {
@@ -2170,11 +2177,11 @@
 
             .modal-info-value {
                 min-height: auto;
-                justify-content: flex-start;
+                justify-content: center;
                 align-items: center;
                 text-align: center;
                 font-size: var(--modal-info-font-size);
-                line-height: 1.18;
+                line-height: 1.12;
             }
 
             .info-cell-exams,
@@ -2189,7 +2196,7 @@
             }
 
             .info-cell-exams .modal-info-value {
-                justify-content: flex-start;
+                justify-content: center;
                 align-items: center;
                 text-align: center;
             }
@@ -2201,20 +2208,27 @@
             }
 
             .modal-places-heading {
-                gap: 5px;
+                gap: 4px;
             }
 
             .modal-places-categories {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0 4px;
                 margin: 0;
-                justify-items: center;
                 font-size: var(--modal-info-font-size);
-                line-height: 1.05;
+                line-height: 1.08;
                 max-width: none;
+            }
+
+            .modal-places-category {
+                display: inline;
             }
 
             .modal-places-values {
                 font-size: var(--modal-info-font-size);
-                line-height: 1.18;
+                line-height: 1.12;
             }
 
             .place-cell,
