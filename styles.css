@@ -1597,63 +1597,12 @@
             box-shadow: none;
         }
 
-        .footer-map-card img {
+        .footer-map-card iframe {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            min-height: inherit;
             display: block;
-            transition: transform 0.4s ease;
-        }
-
-        .footer-map-caption {
-            position: absolute;
-            left: 18px;
-            top: 18px;
-            max-width: min(320px, calc(100% - 36px));
-            padding: 14px 16px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(2, 68, 146, 0.1);
-            backdrop-filter: blur(8px);
-            display: grid;
-            gap: 4px;
-        }
-
-        .footer-map-caption strong {
-            color: #2f2f2f;
-            font-size: 21px;
-            font-weight: 700;
-            line-height: 1.05;
-        }
-
-        .footer-map-caption span {
-            color: var(--text-light);
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 1.2;
-        }
-
-        .footer-map-button {
-            position: absolute;
-            left: 18px;
-            bottom: 18px;
-            background: rgba(2, 68, 146, 0.92);
-            color: var(--white);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            line-height: 1;
-            backdrop-filter: blur(6px);
-            transition: all 0.3s ease;
-        }
-
-        .footer-map-card:hover img {
-            transform: scale(1.03);
-        }
-
-        .footer-map-card:hover .footer-map-button {
-            background: var(--primary-dark);
+            border: 0;
         }
 
         .contacts-blue-band {
@@ -1670,13 +1619,25 @@
             gap: 18px;
         }
 
-        .contacts-blue-band > span,
-        .contacts-band-title {
-            font-size: clamp(22px, 2.3vw, 34px);
+        .contacts-band-copy {
+            display: grid;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .contacts-band-copy span {
+            font-size: clamp(21px, 2vw, 30px);
             font-weight: 600;
             line-height: 1;
             color: inherit;
-            text-decoration: none;
+        }
+
+        .contacts-band-copy p {
+            max-width: 640px;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: clamp(14px, 1vw, 17px);
+            font-weight: 500;
+            line-height: 1.22;
         }
 
         .contacts-band-actions {
@@ -2497,29 +2458,6 @@
                 min-height: 280px;
             }
 
-            .footer-map-caption {
-                left: 12px;
-                top: 12px;
-                max-width: calc(100% - 24px);
-                padding: 11px 12px;
-                border-radius: 12px;
-            }
-
-            .footer-map-caption strong {
-                font-size: 18px;
-            }
-
-            .footer-map-caption span {
-                font-size: 13px;
-            }
-
-            .footer-map-button {
-                left: 12px;
-                bottom: 12px;
-                padding: 8px 11px;
-                font-size: 12px;
-            }
-
             .contacts-blue-band {
                 min-height: auto;
                 margin-top: 2px;
@@ -2529,10 +2467,13 @@
                 flex-direction: column;
             }
 
-            .contacts-blue-band > span,
-            .contacts-band-title {
+            .contacts-band-copy span {
                 font-size: 23px;
                 line-height: 1.05;
+            }
+
+            .contacts-band-copy p {
+                font-size: 15px;
             }
 
             .contacts-band-actions {
@@ -2662,25 +2603,12 @@
                 min-height: 240px;
             }
 
-            .footer-map-caption {
-                position: absolute;
-                margin: 0;
-                max-width: calc(100% - 24px);
-            }
-
-            .footer-map-card img {
-                min-height: 240px;
-                height: 100%;
-            }
-
-            .footer-map-button {
-                left: 12px;
-                bottom: 12px;
-            }
-
-            .contacts-blue-band > span,
-            .contacts-band-title {
+            .contacts-band-copy span {
                 font-size: 21px;
+            }
+
+            .contacts-band-copy p {
+                font-size: 14px;
             }
 
             .site-footer-panel {
