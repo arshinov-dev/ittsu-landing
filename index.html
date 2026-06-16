@@ -33,9 +33,9 @@
             <div class="hero-slideshow" id="heroSlideshow" aria-label="Фотографии Российского университета транспорта">
                 <img
                     class="hero-slide active"
-                    src="images/hero/p26-1800.jpg"
-                    srcset="images/hero/p26-900.jpg 900w, images/hero/p26-1800.jpg 1800w"
-                    sizes="(max-width: 768px) calc(100vw - 32px), calc(100vw - 72px)"
+                    src="images/hero-normal/hero-p26-1800.jpg"
+                    srcset="images/hero-normal/hero-p26-900.jpg 900w, images/hero-normal/hero-p26-1800.jpg 1800w"
+                    sizes="(max-width: 768px) calc(100vw - 32px), (min-width: 1640px) 1548px, calc(100vw - 88px)"
                     alt=""
                     fetchpriority="high"
                     decoding="async"
@@ -103,7 +103,6 @@
     <section class="programs" id="programs">
         <div class="programs-header">
             <h2 class="section-title">Образовательные программы</h2>
-            <p class="section-subtitle">Подберите направление по интересам, коду или форме обучения</p>
             <div class="search-filter-container">
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="Поиск программы по названию или коду..." oninput="filterPrograms()">

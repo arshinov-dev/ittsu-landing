@@ -1459,7 +1459,7 @@
         let currentFormFilter = 'all';
         const mobileProgramsQuery = window.matchMedia('(max-width: 768px)');
         const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const heroSlideSizes = '(max-width: 768px) calc(100vw - 32px), calc(100vw - 72px)';
+        const heroSlideSizes = '(max-width: 768px) calc(100vw - 32px), (min-width: 1640px) 1548px, calc(100vw - 88px)';
         const programImageSizes = {
             cover: '(max-width: 768px) calc(100vw - 32px), 420px',
             modalCover: '(max-width: 768px) calc(100vw - 56px), 520px',
@@ -1467,43 +1467,79 @@
         };
         const foreignProgramNote = 'Места для приема иностранных граждан и лиц без гражданства';
         const mobileProgramInitialLimits = {
-            basic: 2,
-            specialized: 2,
+            basic: 3,
+            specialized: 3,
             bachelor: 2
         };
-        const heroSlides = [
+        const desktopHeroSlides = [
+            {
+                src: 'images/hero-normal/hero-p26-1800.jpg',
+                srcset: 'images/hero-normal/hero-p26-900.jpg 900w, images/hero-normal/hero-p26-1800.jpg 1800w'
+            },
+            ...[
+                'hero-25',
+                'hero-01',
+                'hero-02',
+                'hero-03',
+                'hero-04',
+                'hero-05',
+                'hero-06',
+                'hero-07',
+                'hero-08',
+                'hero-09',
+                'hero-10',
+                'hero-11',
+                'hero-12',
+                'hero-13',
+                'hero-14',
+                'hero-15',
+                'hero-16',
+                'hero-17',
+                'hero-18',
+                'hero-19',
+                'hero-20',
+                'hero-21',
+                'hero-22',
+                'hero-23',
+                'hero-24'
+            ].map(name => ({
+                src: `images/hero-normal/${name}-1800.jpg`,
+                srcset: `images/hero-normal/${name}-900.jpg 900w, images/hero-normal/${name}-1800.jpg 1800w`
+            }))
+        ];
+        const mobileHeroSlides = [
             'p26',
             'p1',
             'p14',
-            'p8',
+            'p19',
             'p20',
-            'p3',
-            'p18',
-            'p11',
-            'p24',
-            'p5',
-            'p13',
-            'p7',
-            'p22',
-            'p16',
-            'p2',
-            'p25',
-            'p10',
-            'p4',
             'p21',
-            'p12',
-            'p6',
-            'p17',
+            'p22',
             'p23',
-            'p9',
+            'p24',
+            'p25',
+            'p18',
+            'p17',
+            'p16',
             'p15',
-            'p19'
+            'p13',
+            'p12',
+            'p11',
+            'p10',
+            'p9',
+            'p8',
+            'p7',
+            'p6',
+            'p5',
+            'p4',
+            'p3',
+            'p2'
         ].map(name => ({
-            src: `images/hero/${name}-1800.jpg`,
-            srcset: `images/hero/${name}-900.jpg 900w, images/hero/${name}-1800.jpg 1800w`
+            src: `images/hero/${name}-1200.jpg`,
+            srcset: `images/hero/${name}-900.jpg 900w, images/hero/${name}-1200.jpg 1200w, images/hero/${name}-1800.jpg 1800w`
         }));
-        const mobileProgramBatchSize = 3;
-        let mobileProgramLimits = { ...mobileProgramInitialLimits };
+        let heroSlideshowTimer;
+        let isMobileProgramsExpanded = false;
         let lastFilteredPrograms = programs;
         let revealObserver;
 
@@ -1576,15 +1612,74 @@
             `).join('');
         }
 
+        function renderModalLines(lines) {
+            return lines
+                .map(line => `<span class="modal-text-line">${escapeHtml(line)}</span>`)
+                .join('');
+        }
+
+        function getExamLines(value) {
+            const exams = String(value).trim();
+
+            if (exams === 'Внутренние вступительные испытания') {
+                return ['Внутренние', 'вступительные', 'испытания'];
+            }
+
+            if (exams === 'Русский язык, Математика, Физика или Информатика') {
+                return ['Русский язык,', 'Математика,', 'Физика или', 'Информатика'];
+            }
+
+            if (exams === 'Русский язык, Математика, Ин. язык или Обществознание') {
+                return ['Русский язык,', 'Математика,', 'Ин. язык или', 'Обществознание'];
+            }
+
+            return exams
+                .split(',')
+                .map(item => item.trim())
+                .filter(Boolean);
+        }
+
+        function getLevelLines(program) {
+            if (program.level === 'specialized') {
+                return ['специа-', 'лизированное', 'высшее', 'образование'];
+            }
+
+            if (program.level === 'basic') {
+                return ['высшее', 'образование', '(базовое)'];
+            }
+
+            return [String(program.levelName || program.levelShortName).trim().toLowerCase()];
+        }
+
+        function getFormLines(value) {
+            const form = String(value).trim();
+
+            if (form === 'очно-заочная') {
+                return ['очно-', 'заочная'];
+            }
+
+            return [form];
+        }
+
         function renderPlacesSummary(program) {
             const places = getPlacesBreakdown(program);
             const categories = places.map(place => escapeHtml(place.category)).join('/');
-            const values = places.map(place => escapeHtml(place.value)).join('/');
+            const categoryItems = places
+                .map((place, index) => `
+                    <span class="modal-places-category">
+                        ${escapeHtml(place.category)}${index < places.length - 1 ? '/' : ''}
+                    </span>
+                `)
+                .join('');
+            const valueItems = places.map(place => place.value).join('/');
 
             return `
-                <div class="modal-places-summary">
-                    <div class="modal-places-categories">${categories}</div>
-                    <div class="modal-places-values">${values}</div>
+                <div class="modal-info-label modal-places-heading">
+                    <span class="modal-text-line">места</span>
+                    <span class="modal-places-categories" aria-label="${categories}">${categoryItems}</span>
+                </div>
+                <div class="modal-info-value modal-places-values modal-places-count-${places.length}">
+                    <span class="modal-text-line">${escapeHtml(valueItems)}</span>
                 </div>
             `;
         }
@@ -1668,6 +1763,12 @@
 
         function setupHeroSlideshow() {
             const slideshow = document.getElementById('heroSlideshow');
+            const heroSlides = mobileProgramsQuery.matches ? mobileHeroSlides : desktopHeroSlides;
+            if (heroSlideshowTimer) {
+                window.clearInterval(heroSlideshowTimer);
+                heroSlideshowTimer = null;
+            }
+
             if (!slideshow || !heroSlides.length) return;
 
             const renderHeroImageAttrs = (slide, index) => `
@@ -1702,7 +1803,7 @@
             const transitionMs = 900;
             const isImageReady = image => image.complete && image.naturalWidth > 0;
 
-            window.setInterval(() => {
+            heroSlideshowTimer = window.setInterval(() => {
                 if (isTransitioning) return;
                 isTransitioning = true;
 
@@ -1791,22 +1892,11 @@
             if (!groupPrograms.length) return;
 
             const section = document.createElement('section');
-            const remainingCount = Math.max((options.total || groupPrograms.length) - groupPrograms.length, 0);
-            const actionMarkup = options.showMore
-                ? `
-                    <div class="program-group-actions">
-                        <button class="programs-load-more" type="button" onclick="showMorePrograms('${escapeHtml(options.level)}')">
-                            Показать ещё (${remainingCount})
-                        </button>
-                    </div>
-                `
-                : '';
 
             section.className = ['program-group', options.className].filter(Boolean).join(' ');
             section.innerHTML = `
                 <h3 class="program-group-title">${escapeHtml(title)}</h3>
                 <div class="program-group-grid"></div>
-                ${actionMarkup}
             `;
 
             const groupGrid = section.querySelector('.program-group-grid');
@@ -1817,6 +1907,19 @@
             container.appendChild(section);
         }
 
+        function appendMobileProgramsAction(container, remainingCount) {
+            if (remainingCount <= 0) return;
+
+            const actions = document.createElement('div');
+            actions.className = 'program-group-actions programs-global-actions';
+            actions.innerHTML = `
+                <button class="programs-load-more" type="button" onclick="showAllPrograms()">
+                    Показать все программы (${remainingCount})
+                </button>
+            `;
+            container.appendChild(actions);
+        }
+
         // Render programs
         function renderPrograms(programsToRender) {
             const grid = document.getElementById('programsGrid');
@@ -1825,7 +1928,7 @@
 
             const foreignPrograms = programsToRender.filter(isForeignProgram);
             const regularPrograms = programsToRender.filter(program => !isForeignProgram(program));
-            const shouldLimitPrograms = mobileProgramsQuery.matches;
+            const shouldLimitPrograms = mobileProgramsQuery.matches && !isMobileProgramsExpanded;
             const programGroups = [
                 { level: 'basic', title: 'Высшее образование' },
                 { level: 'specialized', title: 'Специализированное высшее образование' },
@@ -1833,26 +1936,34 @@
             ];
 
             let renderedRegularCount = 0;
+            let totalHiddenCount = 0;
             programGroups.forEach(group => {
                 const groupPrograms = regularPrograms.filter(program => program.level === group.level);
-                const groupLimit = mobileProgramLimits[group.level] || mobileProgramInitialLimits[group.level] || mobileProgramBatchSize;
+                const groupLimit = mobileProgramInitialLimits[group.level] || groupPrograms.length;
                 const visibleGroupPrograms = shouldLimitPrograms
                     ? groupPrograms.slice(0, groupLimit)
                     : groupPrograms;
+                totalHiddenCount += Math.max(groupPrograms.length - visibleGroupPrograms.length, 0);
 
                 appendProgramGroup(grid, group.title, visibleGroupPrograms, {
                     level: group.level,
-                    total: groupPrograms.length,
-                    showMore: shouldLimitPrograms && visibleGroupPrograms.length < groupPrograms.length,
                     offset: renderedRegularCount
                 });
                 renderedRegularCount += visibleGroupPrograms.length;
             });
 
-            appendProgramGroup(grid, 'Образовательные программы для иностранных граждан', foreignPrograms, {
+            const foreignLimit = mobileProgramInitialLimits.bachelor;
+            const visibleForeignPrograms = shouldLimitPrograms
+                ? foreignPrograms.slice(0, foreignLimit)
+                : foreignPrograms;
+            totalHiddenCount += Math.max(foreignPrograms.length - visibleForeignPrograms.length, 0);
+
+            appendProgramGroup(grid, 'Образовательные программы для иностранных граждан', visibleForeignPrograms, {
                 className: 'program-foreign-section',
                 offset: renderedRegularCount
             });
+
+            appendMobileProgramsAction(grid, shouldLimitPrograms ? totalHiddenCount : 0);
 
             if (!regularPrograms.length && !foreignPrograms.length) {
                 grid.innerHTML = '<p class="programs-empty">По выбранным фильтрам программы не найдены.</p>';
@@ -1861,12 +1972,17 @@
         }
 
         function resetMobileProgramLimits() {
-            mobileProgramLimits = { ...mobileProgramInitialLimits };
+            isMobileProgramsExpanded = false;
         }
 
-        function showMorePrograms(level) {
-            if (!level) return;
-            mobileProgramLimits[level] = (mobileProgramLimits[level] || mobileProgramInitialLimits[level] || 0) + mobileProgramBatchSize;
+        function handleProgramsViewportChange() {
+            resetMobileProgramLimits();
+            setupHeroSlideshow();
+            renderPrograms(lastFilteredPrograms);
+        }
+
+        function showAllPrograms() {
+            isMobileProgramsExpanded = true;
             renderPrograms(lastFilteredPrograms);
         }
 
@@ -1920,11 +2036,6 @@
             renderPrograms(filtered);
         }
 
-        function handleProgramsViewportChange() {
-            resetMobileProgramLimits();
-            renderPrograms(lastFilteredPrograms);
-        }
-
         // Open modal
         function openModal(program) {
             const modal = document.getElementById('modalOverlay');
@@ -1940,24 +2051,23 @@
 
                         <div class="modal-info-bar">
                             <div class="info-cell info-cell-exams">
-                                <div class="modal-info-label">вступительные испытания</div>
-                                <div class="modal-info-value">${escapeHtml(program.exams)}</div>
+                                <div class="modal-info-label">${renderModalLines(['вступительные', 'испытания'])}</div>
+                                <div class="modal-info-value">${renderModalLines(getExamLines(program.exams))}</div>
                             </div>
                             <div class="info-cell">
-                                <div class="modal-info-label">срок обучения</div>
-                                <div class="modal-info-value">${escapeHtml(program.duration)}</div>
+                                <div class="modal-info-label">${renderModalLines(['срок', 'обучения'])}</div>
+                                <div class="modal-info-value">${renderModalLines([program.duration])}</div>
                             </div>
                             <div class="info-cell info-cell-places">
-                                <div class="modal-info-label">места</div>
                                 ${renderPlacesSummary(program)}
                             </div>
                             <div class="info-cell">
-                                <div class="modal-info-label">форма обучения</div>
-                                <div class="modal-info-value">${escapeHtml(program.formDisplayName)}</div>
+                                <div class="modal-info-label">${renderModalLines(['форма', 'обучения'])}</div>
+                                <div class="modal-info-value">${renderModalLines(getFormLines(program.formName))}</div>
                             </div>
                             <div class="info-cell info-cell-level">
-                                <div class="modal-info-label">уровень образования</div>
-                                <div class="modal-info-value">${escapeHtml(program.levelShortName)}</div>
+                                <div class="modal-info-label">${renderModalLines(['уровень', 'образования'])}</div>
+                                <div class="modal-info-value">${renderModalLines(getLevelLines(program))}</div>
                             </div>
                         </div>
 
