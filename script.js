@@ -1473,8 +1473,8 @@
         };
         const desktopHeroSlides = [
             {
-                src: 'images/hero-normal/hero-p26-1800.jpg',
-                srcset: 'images/hero-normal/hero-p26-900.jpg 900w, images/hero-normal/hero-p26-1800.jpg 1800w'
+                src: 'images/hero-normal/first-1800.jpg',
+                srcset: 'images/hero-normal/first-900.jpg 900w, images/hero-normal/first-1800.jpg 1800w'
             },
             ...[
                 'hero-25',
@@ -1508,7 +1508,7 @@
             }))
         ];
         const mobileHeroSlides = [
-            'p26',
+            'first',
             'p1',
             'p14',
             'p19',
