@@ -1,0 +1,17 @@
+# Включаем движок перезаписи (если его еще нет)
+RewriteEngine On
+
+# --- НАСТРОЙКА СТРАНИЦ ОШИБОК ---
+ErrorDocument 403 /maintenance/403.html
+ErrorDocument 404 /maintenance/404.html
+ErrorDocument 503 /maintenance/503.html
+
+# --- ПРАВИЛО ДЛЯ ТЕХНИЧЕСКИХ РАБОТ (ВКЛЮЧАТЬ/ВЫКЛЮЧАТЬ ПО МЕРЕ НЕОБХОДИМОСТИ) ---
+# Чтобы включить тех. работы, удалите символ # в начале следующих 4 строк
+# и замените IP на ваш текущий внешний IP.
+# Чтобы выключить, поставьте # обратно.
+
+# RewriteCond %{REMOTE_ADDR} !^123\.45\.67\.89$
+# RewriteCond %{REQUEST_URI} !^/maintenance/
+# RewriteCond %{REQUEST_URI} !^/assets/
+# RewriteRule ^ - [R=503,L]

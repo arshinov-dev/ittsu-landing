@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Страница не найдена</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Gotham', 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #2F2F2F;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 32px 24px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        .container { text-align: center; max-width: 560px; width: 100%; animation: fadeIn 0.5s ease-out; }
+        .logo { max-width: 160px; width: 60%; height: auto; margin-bottom: 32px; display: inline-block; }
+        h1 { font-weight: 700; font-size: 28px; color: #024492; margin-bottom: 16px; line-height: 1.2; }
+        p { font-weight: 400; font-size: 16px; color: #2F2F2F; margin-bottom: 28px; }
+        .secondary-text { font-weight: 300; font-size: 14px; color: #2F2F2F; opacity: 0.7; margin-top: 32px; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: #024492; color: #FFFFFF; text-decoration: none;
+            padding: 16px 32px; border-radius: 8px; font-weight: 700; font-size: 16px;
+            transition: background-color 0.2s ease, transform 0.1s ease; border: none; cursor: pointer;
+            width: 100%; max-width: 280px;
+        }
+        .btn:hover { background-color: #01418C; }
+        .btn:active { transform: scale(0.97); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 380px) {
+            h1 { font-size: 24px; } p { font-size: 15px; } .logo { max-width: 130px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="/assets/img/icons/rut.svg" alt="Логотип" width="160">
+        </div>
+        <h1>Страница не найдена</h1>
+        <p>Возможно, ссылка устарела, была удалена или содержит опечатку.<br>Проверьте адрес в адресной строке браузера.</p>
+        <a href="/" class="btn">Вернуться на главную</a>
+        <div class="secondary-text">
+            Если вы считаете, что это ошибка, сообщите нам:<br>
+            <a href="mailto:support@ittsu-rut-abitur.ru" style="color: #024492; text-decoration: none; font-weight: 400;">support@ittsu-rut-abitur.ru</a>
+        </div>
+    </div>
+</body>
+</html>

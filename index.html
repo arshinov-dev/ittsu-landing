@@ -4,23 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Поступай в ИТТСУ РУТ</title>
+    <meta name="description" content="Образовательные программы ИТТСУ РУТ, условия поступления, контакты приёмной комиссии и консультанта по поступлению.">
     <meta name="theme-color" content="#024492">
-    <link rel="icon" type="image/png" href="update/favicon-2/favicon-96x96.png" sizes="96x96">
-    <link rel="icon" type="image/svg+xml" href="update/favicon-2/favicon.svg">
-    <link rel="shortcut icon" href="update/favicon-2/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="update/favicon-2/apple-touch-icon.png">
-    <link rel="manifest" href="update/favicon-2/site.webmanifest">
+    <meta property="og:title" content="Поступай в ИТТСУ РУТ">
+    <meta property="og:description" content="Образовательные программы ИТТСУ РУТ, условия поступления, контакты приёмной комиссии и консультанта по поступлению.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Поступай в ИТТСУ РУТ">
+    <meta name="twitter:description" content="Образовательные программы ИТТСУ РУТ, условия поступления, контакты приёмной комиссии и консультанта по поступлению.">
+    <link rel="icon" type="image/png" href="assets/img/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="assets/img/favicon/favicon.svg">
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="assets/img/favicon/site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
     <!-- Header -->
     <header class="site-header">
         <div class="header-content">
             <a class="header-brand" href="https://www.rut-miit.ru/" target="_blank" rel="noopener" aria-label="Сайт Российского университета транспорта">
-                <img class="header-brand-graphic" src="update/head_update/graphics/130years-rut-ittsu.svg" alt="130 лет. Российский университет транспорта. Институт транспортной техники и систем управления">
+                <img class="header-brand-graphic" src="assets/img/brand/130years-rut-ittsu.svg" alt="130 лет. Российский университет транспорта. Институт транспортной техники и систем управления">
             </a>
             <nav class="header-nav" aria-label="Основная навигация">
                 <ul>
@@ -39,8 +47,8 @@
             <div class="hero-slideshow" id="heroSlideshow" aria-label="Фотографии Российского университета транспорта">
                 <img
                     class="hero-slide active"
-                    src="images/hero-normal/first-1800.jpg"
-                    srcset="images/hero-normal/first-900.jpg 900w, images/hero-normal/first-1800.jpg 1800w"
+                    src="assets/img/hero/desktop/first-1800.jpg"
+                    srcset="assets/img/hero/desktop/first-900.jpg 900w, assets/img/hero/desktop/first-1800.jpg 1800w"
                     sizes="(max-width: 768px) calc(100vw - 32px), (min-width: 1640px) 1548px, calc(100vw - 88px)"
                     alt=""
                     fetchpriority="high"
@@ -67,59 +75,21 @@
         </div>
     </section>
 
-    <!-- Benefits Section
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <h2 class="section-title">Почему выбирают ИТТСУ РУТ</h2>
-            <p class="section-subtitle">Специалисты для транспортной отрасли</p>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-image">
-                        <img src="images/benefit-1.jpg" alt="Бюджетные места">
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Бюджетные места</h3>
-                        <p>Более 1500 бюджетных мест ежегодно на всех уровнях образования. Высокий процент поступления.</p>
-                    </div>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-image">
-                        <img src="images/benefit-2.jpg" alt="Практика у партнёров">
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Практика у партнёров</h3>
-                        <p>Стажировки в ведущих компаниях: РЖД, ТМХ, Синара, 1520 Сигнал</p>
-                    </div>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-image">
-                        <img src="images/benefit-3.jpg" alt="Современная инфраструктура">
-                    </div>
-                    <div class="benefit-content">
-                        <h3>Современная инфраструктура</h3>
-                        <p>Мы обновились — теперь у нас современный ремонт!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    -->
-
     <!-- Programs Section -->
     <section class="programs" id="programs">
         <div class="programs-header">
             <h2 class="section-title">Образовательные программы</h2>
             <div class="search-filter-container">
                 <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Поиск программы по названию или коду..." oninput="filterPrograms()">
+                    <input type="text" id="searchInput" placeholder="Поиск программы по названию или коду...">
                 </div>
-                <select class="filter-select" id="levelFilterSelect" aria-label="Фильтр по уровню образования" onchange="filterByLevel(this.value)">
+                <select class="filter-select" id="levelFilterSelect" aria-label="Фильтр по уровню образования">
                     <option value="all">Все уровни</option>
                     <option value="basic">Высшее образование</option>
                     <option value="bachelor">Бакалавриат</option>
                     <option value="specialized">Специализированное высшее</option>
                 </select>
-                <select class="filter-select" id="formFilterSelect" aria-label="Фильтр по форме обучения" onchange="filterByForm(this.value)">
+                <select class="filter-select" id="formFilterSelect" aria-label="Фильтр по форме обучения">
                     <option value="all">Все формы</option>
                     <option value="full">Очная</option>
                     <option value="mixed">Очно-заочная</option>
@@ -147,7 +117,7 @@
                 <article class="apply-route">
                     <div class="route-head">
                         <div class="route-logo">
-                            <img src="images/gos.svg" alt="Госуслуги">
+                            <img src="assets/img/icons/gos.svg" alt="Госуслуги">
                         </div>
                         <div class="route-label">онлайн</div>
                     </div>
@@ -158,7 +128,7 @@
                 <article class="apply-route">
                     <div class="route-head">
                         <div class="route-logo">
-                            <img src="images/rut.svg" alt="Российский университет транспорта">
+                            <img src="assets/img/icons/rut.svg" alt="Российский университет транспорта">
                         </div>
                         <div class="route-label">очно</div>
                     </div>
@@ -212,26 +182,26 @@
     <footer class="site-footer">
         <div class="site-footer-panel">
             <a class="footer-brand" href="https://www.rut-miit.ru/" target="_blank" rel="noopener" aria-label="Сайт Российского университета транспорта">
-                <img src="update/head_update/graphics/130years-rut-ittsu.svg" alt="130 лет. Российский университет транспорта. Институт транспортной техники и систем управления">
+                <img src="assets/img/brand/130years-rut-ittsu.svg" alt="130 лет. Российский университет транспорта. Институт транспортной техники и систем управления">
             </a>
             <div class="footer-socials" aria-label="Социальные сети ИТТСУ">
                 <a href="https://max.ru/id7715027733_gos4" target="_blank" rel="noopener" aria-label="ИТТСУ в MAX">
-                    <img src="update/head_update/graphics/max.svg" alt="">
+                    <img src="assets/img/brand/max.svg" alt="">
                 </a>
                 <a href="https://vk.com/ittsu_rut" target="_blank" rel="noopener" aria-label="ИТТСУ во ВКонтакте">
-                    <img src="update/head_update/graphics/vk.svg" alt="">
+                    <img src="assets/img/brand/vk.svg" alt="">
                 </a>
                 <a href="https://t.me/ittsu_rut" target="_blank" rel="noopener" aria-label="ИТТСУ в Telegram">
-                    <img src="update/head_update/graphics/tg.svg" alt="">
+                    <img src="assets/img/brand/tg.svg" alt="">
                 </a>
             </div>
         </div>
     </footer>
 
     <!-- Modal -->
-    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-        <div class="modal-content" id="modalContent">
-            <button class="modal-close" onclick="closeModal()" aria-label="Закрыть"></button>
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+        <div class="modal-content" id="modalContent" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" type="button" aria-label="Закрыть"></button>
             <div id="modalBody"></div>
         </div>
     </div>
@@ -240,6 +210,13 @@
         <span aria-hidden="true">↑</span>
     </button>
 
-    <script src="script.js"></script>
+    <script src="assets/js/site.config.js"></script>
+    <script src="assets/js/site.utils.js"></script>
+    <script src="assets/js/site.effects.js"></script>
+    <script src="assets/js/hero.js"></script>
+    <script src="assets/js/program-modal.js"></script>
+    <script src="assets/js/programs.data.js"></script>
+    <script src="assets/js/programs.js"></script>
+    <script src="assets/js/app.js"></script>
 </body>
 </html>
