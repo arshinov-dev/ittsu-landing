@@ -265,9 +265,15 @@
         .hero-contact-card strong {
             display: block;
             margin-bottom: 12px;
-            font-size: clamp(18px, 1.25vw, 25px);
+            font-size: clamp(17px, 1.12vw, 23px);
             line-height: 1.12;
             font-weight: 600;
+        }
+
+        .hero-contact-card strong a {
+            display: inline;
+            font: inherit;
+            line-height: inherit;
         }
 
         .hero-contact-card span,
@@ -288,6 +294,12 @@
         .consultant-name {
             margin-bottom: 1px;
             font-weight: 600;
+        }
+
+        @media (min-width: 1121px) {
+            .hero-consultant-card strong {
+                white-space: nowrap;
+            }
         }
 
         .btn {
