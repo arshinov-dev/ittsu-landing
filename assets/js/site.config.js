@@ -14,11 +14,8 @@ window.ITTSU_SITE_CONFIG = {
         bachelor: 2
     },
     desktopHeroSlides: [
-        {
-            src: 'assets/img/hero/desktop/first-1800.jpg',
-            srcset: 'assets/img/hero/desktop/first-900.jpg 900w, assets/img/hero/desktop/first-1800.jpg 1800w'
-        },
         ...[
+            'hero-15',
             'hero-25',
             'hero-01',
             'hero-02',
@@ -34,7 +31,6 @@ window.ITTSU_SITE_CONFIG = {
             'hero-12',
             'hero-13',
             'hero-14',
-            'hero-15',
             'hero-16',
             'hero-17',
             'hero-18',
@@ -50,7 +46,7 @@ window.ITTSU_SITE_CONFIG = {
         }))
     ],
     mobileHeroSlides: [
-        'first',
+        'p15',
         'p1',
         'p14',
         'p19',
@@ -63,7 +59,6 @@ window.ITTSU_SITE_CONFIG = {
         'p18',
         'p17',
         'p16',
-        'p15',
         'p13',
         'p12',
         'p11',

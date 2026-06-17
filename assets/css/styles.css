@@ -862,15 +862,15 @@
         }
 
         .modal-info-bar {
-            --modal-info-font-size: clamp(15px, 1vw, 17px);
+            --modal-info-font-size: clamp(14px, 0.9vw, 16px);
             margin: 0 0 14px;
-            min-height: clamp(188px, 14vw, 220px);
+            min-height: auto;
             background: var(--primary-blue);
-            border-radius: 24px;
-            padding: clamp(24px, 2.2vw, 34px) clamp(22px, 2.5vw, 38px);
+            border-radius: 18px;
+            padding: clamp(16px, 1.7vw, 22px) clamp(20px, 2vw, 28px);
             display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.72fr) minmax(0, 1.78fr) minmax(0, 0.84fr) minmax(0, 1.2fr);
-            gap: clamp(12px, 1.4vw, 22px);
+            grid-template-columns: 1fr;
+            gap: 0;
             color: var(--white);
             overflow: hidden;
             position: relative;
@@ -882,14 +882,20 @@
 
         .info-cell {
             min-width: 0;
-            min-height: clamp(136px, 10.5vw, 164px);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            min-height: auto;
+            display: grid;
+            grid-template-columns: minmax(138px, 0.76fr) minmax(0, 1.24fr);
+            justify-content: stretch;
             align-items: center;
-            gap: clamp(14px, 1.8vw, 28px);
+            gap: clamp(12px, 1.2vw, 18px);
+            padding: clamp(8px, 0.9vw, 12px) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.22);
             position: relative;
             z-index: 1;
+        }
+
+        .info-cell:last-child {
+            border-bottom: 0;
         }
 
         .modal-info-label,
@@ -901,7 +907,7 @@
             letter-spacing: 0;
             opacity: 1;
             text-align: center;
-            overflow-wrap: normal;
+            overflow-wrap: break-word;
             word-break: normal;
             hyphens: none;
         }
@@ -916,7 +922,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: center;
             font-weight: 600;
         }
 
@@ -935,7 +941,7 @@
         }
 
         .info-cell-places {
-            gap: clamp(12px, 1.5vw, 24px);
+            gap: clamp(12px, 1.2vw, 18px);
         }
 
         .modal-places-heading {
@@ -944,19 +950,20 @@
         }
 
         .modal-places-categories {
-            display: grid;
-            justify-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0 5px;
             font-size: var(--modal-info-font-size);
             font-family: 'Gotham Book', 'Gotham Pro', Gotham, Montserrat, Arial, sans-serif;
             font-weight: 400;
-            line-height: 1.02;
+            line-height: 1.08;
             text-transform: lowercase;
             opacity: 1;
         }
 
         .modal-places-category {
-            display: block;
-            white-space: nowrap;
+            display: inline;
         }
 
         .modal-places-values {
@@ -1746,13 +1753,13 @@
             }
 
             .modal-info-bar {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns: 1fr;
                 min-height: auto;
                 border-radius: 16px;
             }
 
             .info-cell {
-                min-height: 148px;
+                min-height: auto;
                 gap: 14px;
             }
 

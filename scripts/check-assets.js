@@ -135,12 +135,12 @@ if (programs.length !== 33) {
   missing.push(`program data count -> expected 33, got ${programs.length}`);
 }
 
-if ((siteConfig.desktopHeroSlides || []).length !== 26) {
-  missing.push(`desktop hero slide count -> expected 26, got ${(siteConfig.desktopHeroSlides || []).length}`);
+if ((siteConfig.desktopHeroSlides || []).length !== 25) {
+  missing.push(`desktop hero slide count -> expected 25, got ${(siteConfig.desktopHeroSlides || []).length}`);
 }
 
-if ((siteConfig.mobileHeroSlides || []).length !== 26) {
-  missing.push(`mobile hero slide count -> expected 26, got ${(siteConfig.mobileHeroSlides || []).length}`);
+if ((siteConfig.mobileHeroSlides || []).length !== 25) {
+  missing.push(`mobile hero slide count -> expected 25, got ${(siteConfig.mobileHeroSlides || []).length}`);
 }
 
 if (missing.length > 0) {
