@@ -30,6 +30,8 @@
 - `scripts/check-structure.js` - проверка production-структуры, обязательных файлов и отсутствия старых папок/файлов.
 - `maintenance/` - страницы 403/404/503 для Apache/ispmanager.
 - `example.htaccess` - шаблон Apache-конфига; при деплое копируется в публичную папку как `.htaccess`.
+- `robots.txt` - правила индексации и ссылка на sitemap.
+- `sitemap.xml` - карта сайта для поисковых систем.
 - `scripts/deploy-static.sh` - синхронизация только публичных файлов в публичную папку сайта.
 - `scripts/audit-css.js` - аудит CSS-классов против runtime-разметки и JS.
 - `docs/archive/` - архив документации и планов.
@@ -74,7 +76,8 @@
 - Добавлен `scripts/check-program-data.js`, который проверяет обязательные поля, уровни/формы, уникальность номеров, массивы контента и согласованность мест.
 - Добавлен `scripts/check-markup.js`, который защищает от возврата inline-обработчиков и старых путей `images/`, `script.js`, `styles.css`, `update/favicon-2/`.
 - Добавлен `scripts/check-structure.js`, который защищает production-структуру от возврата `images/`, `update/`, root `script.js`, root `styles.css`, root `site.webmanifest` и `.DS_Store`.
-- Добавлен `scripts/deploy-static.sh` для публикации только runtime-файлов `index.html`, `assets/`, `maintenance/` и `.htaccess` в публичную папку домена.
+- Добавлен `scripts/deploy-static.sh` для публикации только runtime-файлов `index.html`, `robots.txt`, `sitemap.xml`, `assets/`, `maintenance/` и `.htaccess` в публичную папку домена.
+- Добавлен `scripts/check-seo.js` для проверки `robots.txt` и `sitemap.xml`.
 - Добавлен `scripts/audit-css.js`; после удаления старых CSS-хвостов аудит показывает `maybeUnused=0`.
 - Из CSS удалены старые неиспользуемые `.btn*`, `.container`, `.section-subtitle`, а также старые классы раскладки мест `.modal-places-grid`, `.place-*`, `.places-count-*`.
 - Улучшена доступность модалки: фокус переводится на кнопку закрытия, Tab удерживается внутри модалки, после закрытия фокус возвращается на кнопку открытия.
@@ -87,6 +90,8 @@
 ```text
 /
   index.html
+  robots.txt
+  sitemap.xml
   README.md
   package.json
   example.htaccess
@@ -218,7 +223,7 @@ Mobile/tablet hero:
 
 `update/` удален из production-дерева. Перед удалением он был зафиксирован в `docs/archive/source-assets-inventory.md`.
 
-Runtime-сайт использует только `index.html`, `assets/`, `maintenance/` и `.htaccess`, который создается из `example.htaccess` во время деплоя.
+Runtime-сайт использует только `index.html`, `robots.txt`, `sitemap.xml`, `assets/`, `maintenance/` и `.htaccess`, который создается из `example.htaccess` во время деплоя.
 
 ## Проверки после текущего этапа
 
@@ -237,12 +242,14 @@ node --check scripts/audit-css.js
 node --check scripts/check-assets.js
 node --check scripts/check-markup.js
 node --check scripts/check-program-data.js
+node --check scripts/check-seo.js
 node --check scripts/check-structure.js
 sh -n scripts/deploy-static.sh
 node scripts/check-structure.js
 node scripts/check-markup.js
 node scripts/check-assets.js
 node scripts/check-program-data.js
+node scripts/check-seo.js
 npm run audit:css
 npm run check
 python3 -m json.tool assets/img/favicon/site.webmanifest

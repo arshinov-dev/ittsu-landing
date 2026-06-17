@@ -10,25 +10,41 @@ fi
 ROOT_DIR=$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)
 PUBLIC_DIR=$(mkdir -p "$PUBLIC_DIR" && CDPATH= cd -- "$PUBLIC_DIR" && pwd)
 STAGING_DIR=$(mktemp -d "${TMPDIR:-/tmp}/ittsu-static.XXXXXX")
+PUBLIC_ROOT_FILES="index.html robots.txt sitemap.xml"
+PUBLIC_DIRECTORIES="assets maintenance"
 
 cleanup() {
     rm -rf "$STAGING_DIR"
 }
 trap cleanup EXIT INT TERM
 
-if [ ! -f "$ROOT_DIR/index.html" ] || [ ! -d "$ROOT_DIR/assets" ] || [ ! -d "$ROOT_DIR/maintenance" ] || [ ! -f "$ROOT_DIR/example.htaccess" ]; then
-    echo "Required production files are missing: index.html, assets/, maintenance/, example.htaccess." >&2
-    exit 1
-fi
+for file in $PUBLIC_ROOT_FILES example.htaccess; do
+    if [ ! -f "$ROOT_DIR/$file" ]; then
+        echo "Required production file is missing: $file." >&2
+        exit 1
+    fi
+done
+
+for directory in $PUBLIC_DIRECTORIES; do
+    if [ ! -d "$ROOT_DIR/$directory" ]; then
+        echo "Required production directory is missing: $directory/." >&2
+        exit 1
+    fi
+done
 
 if [ "$PUBLIC_DIR" = "$ROOT_DIR" ]; then
     echo "PUBLIC_DIR must not be the repository root." >&2
     exit 1
 fi
 
-cp "$ROOT_DIR/index.html" "$STAGING_DIR/index.html"
-cp -R "$ROOT_DIR/assets" "$STAGING_DIR/assets"
-cp -R "$ROOT_DIR/maintenance" "$STAGING_DIR/maintenance"
+for file in $PUBLIC_ROOT_FILES; do
+    cp "$ROOT_DIR/$file" "$STAGING_DIR/$file"
+done
+
+for directory in $PUBLIC_DIRECTORIES; do
+    cp -R "$ROOT_DIR/$directory" "$STAGING_DIR/$directory"
+done
+
 cp "$ROOT_DIR/example.htaccess" "$STAGING_DIR/.htaccess"
 
 rsync -a --delete \

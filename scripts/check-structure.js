@@ -6,6 +6,8 @@ const errors = [];
 
 const requiredPaths = [
   "index.html",
+  "robots.txt",
+  "sitemap.xml",
   "README.md",
   "package.json",
   "example.htaccess",

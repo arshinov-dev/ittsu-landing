@@ -5,6 +5,8 @@
 ## Структура
 
 - `index.html` - основная HTML-страница.
+- `robots.txt` - правила индексации и ссылка на sitemap.
+- `sitemap.xml` - карта сайта для поисковых систем.
 - `.editorconfig` - базовые правила форматирования файлов в репозитории.
 - `assets/css/styles.css` - стили сайта.
 - `assets/js/site.config.js` - настройки сайта и списки hero-слайдов.
@@ -21,6 +23,7 @@
 - `scripts/check-assets.js` - проверка локальных и динамических путей к ассетам.
 - `scripts/check-markup.js` - проверка разметки на старые runtime-пути, inline-обработчики и порядок скриптов.
 - `scripts/check-program-data.js` - проверка целостности данных программ.
+- `scripts/check-seo.js` - проверка `robots.txt` и `sitemap.xml`.
 - `scripts/check-structure.js` - проверка production-структуры и отсутствия старых папок/файлов.
 - `scripts/deploy-static.sh` - синхронизация только публичных файлов в папку сайта.
 - `scripts/audit-css.js` - аудит CSS-классов против runtime-разметки и JS.
@@ -28,9 +31,9 @@
 - `package.json` -  зависимости и npm-скрипты проекта.
 - `README.md` - этот файл. 
 
-## Требования 
+## Требования
 
-Для работы сос криптами проверки и сборки необходим [Node.js](https://nodejs.org/) (версия 18+). Также убедитесь, что установлен `git`.
+Для работы со скриптами проверки и деплоя необходим [Node.js](https://nodejs.org/) (версия 18+). Также убедитесь, что установлен `git`.
 
 ## Проверки
 
@@ -52,6 +55,7 @@ npm run check:structure
 npm run check:markup
 npm run check:assets
 npm run check:data
+npm run check:seo
 npm run audit:css
 ```
 
@@ -60,7 +64,7 @@ npm run audit:css
 Сайт можно открыть как статический `index.html` или поднять простой локальный сервер:
 
 ```bash
-npx http-server -p 80000
+npx http-server -p 8000
 # или, если установлен Python:
 python3 -m http.server 8000
 # или PHP (если доступен):
@@ -74,6 +78,8 @@ php -S 127.0.0.1:8000
 
 ```text
 index.html
+robots.txt
+sitemap.xml
 assets/
 maintenance/
 .htaccess
@@ -105,7 +111,7 @@ PUBLIC_DIR=/path/to/public_html sh scripts/deploy-static.sh
 `scripts/deploy-static.sh` работает как зеркало публичной сборки:
 
 1. Создает временную staging-папку.
-2. Кладет туда `index.html`, `assets/`, `maintenance/`.
+2. Кладет туда `index.html`, `robots.txt`, `sitemap.xml`, `assets/`, `maintenance/`.
 3. Копирует `example.htaccess` как `.htaccess`.
 4. Через `rsync -a --delete` делает публичную папку точной копией staging.
 

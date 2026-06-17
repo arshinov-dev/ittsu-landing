@@ -4,12 +4,13 @@
   "version": "1.0.0",
   "description": "Static landing page for ITTSU RUT admission programs.",
   "scripts": {
-    "check": "npm run check:js && npm run check:deploy && npm run check:structure && npm run check:markup && npm run check:assets && npm run check:data",
+    "check": "npm run check:js && npm run check:deploy && npm run check:structure && npm run check:markup && npm run check:assets && npm run check:data && npm run check:seo",
     "check:assets": "node scripts/check-assets.js",
     "check:data": "node scripts/check-program-data.js",
     "check:deploy": "sh -n scripts/deploy-static.sh",
-    "check:js": "node --check assets/js/site.config.js && node --check assets/js/site.utils.js && node --check assets/js/site.effects.js && node --check assets/js/hero.js && node --check assets/js/program-modal.js && node --check assets/js/programs.data.js && node --check assets/js/programs.js && node --check assets/js/app.js && node --check scripts/audit-css.js && node --check scripts/check-assets.js && node --check scripts/check-markup.js && node --check scripts/check-program-data.js && node --check scripts/check-structure.js",
+    "check:js": "node --check assets/js/site.config.js && node --check assets/js/site.utils.js && node --check assets/js/site.effects.js && node --check assets/js/hero.js && node --check assets/js/program-modal.js && node --check assets/js/programs.data.js && node --check assets/js/programs.js && node --check assets/js/app.js && node --check scripts/audit-css.js && node --check scripts/check-assets.js && node --check scripts/check-markup.js && node --check scripts/check-program-data.js && node --check scripts/check-seo.js && node --check scripts/check-structure.js",
     "check:markup": "node scripts/check-markup.js",
+    "check:seo": "node scripts/check-seo.js",
     "check:structure": "node scripts/check-structure.js",
     "audit:css": "node scripts/audit-css.js"
   },
