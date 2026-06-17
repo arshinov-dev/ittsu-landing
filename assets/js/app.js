@@ -147,7 +147,6 @@
         banner.hidden = getStoredCookieConsent();
 
         acceptButton.addEventListener('click', () => {
-            reachMetrikaGoal('cookie_accept_click');
             storeCookieConsent();
             banner.hidden = true;
         });
@@ -187,10 +186,6 @@
 
         if (normalizedHref === 'https://www.gosuslugi.ru') {
             return 'gosuslugi_click';
-        }
-
-        if (normalizedHref === 'https://www.rut-miit.ru/org/privacy') {
-            return 'privacy_click';
         }
 
         if (href.includes('tel:')) {
