@@ -11,6 +11,10 @@
     const programs = window.ITTSU_PROGRAMS || [];
     const metrikaCounterId = 109911928;
     const cookieConsentStorageKey = 'miit_cookie_consent';
+    const programSearchTrackingDelay = 700;
+    const viewedSections = new Set();
+    let programSearchTrackingTimer = 0;
+    let lastTrackedProgramSearch = '';
 
     function reachMetrikaGoal(goalName, params) {
         if (!goalName) return;
@@ -143,6 +147,7 @@
         banner.hidden = getStoredCookieConsent();
 
         acceptButton.addEventListener('click', () => {
+            reachMetrikaGoal('cookie_accept_click');
             storeCookieConsent();
             banner.hidden = true;
         });
@@ -176,6 +181,18 @@
             return 'admissions_office_click';
         }
 
+        if (normalizedHref === 'https://www.rut-miit.ru') {
+            return 'institute_site_click';
+        }
+
+        if (normalizedHref === 'https://www.gosuslugi.ru') {
+            return 'gosuslugi_click';
+        }
+
+        if (normalizedHref === 'https://www.rut-miit.ru/org/privacy') {
+            return 'privacy_click';
+        }
+
         if (href.includes('tel:')) {
             return getContactScope(link) === 'consult' ? 'phone_consult_click' : 'phone_main_click';
         }
@@ -187,14 +204,103 @@
         return '';
     }
 
+    function getSelectedOptionText(select) {
+        return select?.selectedOptions?.[0]?.textContent?.trim() || '';
+    }
+
+    function getProgramFilterParams(changedFilter) {
+        const levelSelect = document.getElementById('levelFilterSelect');
+        const formSelect = document.getElementById('formFilterSelect');
+
+        return {
+            changed_filter: changedFilter,
+            level: levelSelect?.value || 'all',
+            level_label: getSelectedOptionText(levelSelect),
+            form: formSelect?.value || 'all',
+            form_label: getSelectedOptionText(formSelect)
+        };
+    }
+
+    function getSectionAnalyticsName(sectionId) {
+        return String(sectionId).replace(/-/g, '_');
+    }
+
     function setupMetrikaGoalTracking() {
         document.addEventListener('click', event => {
             const link = event.target.closest('a');
+            const explicitGoalElement = event.target.closest('button[data-metrika-goal]');
+            const loadMoreButton = event.target.closest('.programs-load-more');
 
-            if (!link) return;
+            if (link) {
+                reachMetrikaGoal(getLinkMetrikaGoal(link));
+            }
 
-            reachMetrikaGoal(getLinkMetrikaGoal(link));
+            if (explicitGoalElement) {
+                reachMetrikaGoal(explicitGoalElement.getAttribute('data-metrika-goal'));
+            }
+
+            if (loadMoreButton) {
+                const remainingCount = Number((loadMoreButton.textContent || '').match(/\d+/)?.[0] || 0);
+                reachMetrikaGoal('programs_load_more_click', { remaining_count: remainingCount });
+            }
         });
+    }
+
+    function setupProgramSearchTracking() {
+        const searchInput = document.getElementById('searchInput');
+
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.trim();
+
+            window.clearTimeout(programSearchTrackingTimer);
+
+            if (query.length < 2) return;
+
+            programSearchTrackingTimer = window.setTimeout(() => {
+                if (query === lastTrackedProgramSearch) return;
+
+                lastTrackedProgramSearch = query;
+                reachMetrikaGoal('program_search_used', { query });
+            }, programSearchTrackingDelay);
+        });
+    }
+
+    function setupProgramFilterTracking() {
+        document.getElementById('levelFilterSelect')?.addEventListener('change', () => {
+            reachMetrikaGoal('program_filter_change', getProgramFilterParams('level'));
+        });
+        document.getElementById('formFilterSelect')?.addEventListener('change', () => {
+            reachMetrikaGoal('program_filter_change', getProgramFilterParams('form'));
+        });
+    }
+
+    function setupSectionViewTracking() {
+        if (!('IntersectionObserver' in window)) return;
+
+        const sections = ['programs', 'how-to-apply', 'contacts']
+            .map(id => document.getElementById(id))
+            .filter(Boolean);
+
+        if (!sections.length) return;
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+
+                const section = getSectionAnalyticsName(entry.target.id);
+                if (viewedSections.has(section)) return;
+
+                viewedSections.add(section);
+                reachMetrikaGoal('section_view', { section });
+                observer.unobserve(entry.target);
+            });
+        }, {
+            threshold: 0.35
+        });
+
+        sections.forEach(section => observer.observe(section));
     }
 
     window.ITTSU_ANALYTICS = {
@@ -261,6 +367,9 @@
     setupBackToTop({ reducedMotionQuery });
     setupCookieConsent();
     setupMetrikaGoalTracking();
+    setupProgramSearchTracking();
+    setupProgramFilterTracking();
+    setupSectionViewTracking();
 
     if (mobileProgramsQuery.addEventListener) {
         mobileProgramsQuery.addEventListener('change', handleProgramsViewportChange);
