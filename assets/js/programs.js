@@ -97,13 +97,13 @@
             container.appendChild(section);
         }
 
-        function appendMobileProgramsAction(container, remainingCount, onClick) {
+        function appendMobileProgramsAction(container, remainingCount, onClick, analyticsGroup) {
             if (remainingCount <= 0) return;
 
             const actions = document.createElement('div');
             actions.className = 'program-group-actions programs-global-actions';
             actions.innerHTML = `
-                <button class="programs-load-more" type="button">
+                <button class="programs-load-more" type="button" data-program-group="${escapeHtml(analyticsGroup || '')}">
                     Показать все программы (${remainingCount})
                 </button>
             `;
@@ -167,7 +167,12 @@
             });
             renderedCount += visibleBasicPrograms.length;
 
-            appendMobileProgramsAction(grid, hiddenBasicCount + hiddenForeignCount, showBasicPrograms);
+            appendMobileProgramsAction(
+                grid,
+                hiddenBasicCount + hiddenForeignCount,
+                showBasicPrograms,
+                'высшее базовое и бакалавриат для иностранцев'
+            );
 
             if (!shouldHideForeignPrograms) {
                 appendProgramGroup(grid, 'Образовательные программы для иностранных граждан', buckets.foreignPrograms, {
@@ -183,7 +188,12 @@
             });
             renderedCount += visibleSpecializedPrograms.length;
 
-            appendMobileProgramsAction(grid, hiddenSpecializedCount, showSpecializedPrograms);
+            appendMobileProgramsAction(
+                grid,
+                hiddenSpecializedCount,
+                showSpecializedPrograms,
+                'высшее специализированное'
+            );
         }
 
         function render(programsToRender) {

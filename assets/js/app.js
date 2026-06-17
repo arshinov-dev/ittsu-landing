@@ -241,7 +241,10 @@
 
             if (loadMoreButton) {
                 const remainingCount = Number((loadMoreButton.textContent || '').match(/\d+/)?.[0] || 0);
-                reachMetrikaGoal('programs_load_more_click', { remaining_count: remainingCount });
+                reachMetrikaGoal('programs_load_more_click', {
+                    remaining_count: remainingCount,
+                    program_group: loadMoreButton.getAttribute('data-program-group') || ''
+                });
             }
         });
     }
