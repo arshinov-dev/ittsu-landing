@@ -24,6 +24,9 @@
 
         function createProgramCard(program, index) {
             const card = document.createElement('div');
+            const analytics = window.ITTSU_ANALYTICS || {};
+            const programName = analytics.getProgramAnalyticsName?.(program) || `program_${program.number}`;
+            const programCategory = analytics.getProgramAnalyticsCategory?.(program) || program.levelName || program.level;
             const revealDelay = Math.min(index, 6) * 35;
             const foreignLevelTag = isForeignProgram(program)
                 ? `<span>${escapeHtml(program.levelShortName.toLowerCase())}</span>`
@@ -34,8 +37,11 @@
             const coverEdgeCropClass = needsCoverEdgeCrop(program) ? ' program-image--edge-crop' : '';
 
             card.className = 'program-card';
+            card.dataset.programName = programName;
+            card.dataset.programCategory = programCategory;
             card.style.setProperty('--reveal-delay', `${revealDelay}ms`);
             card.addEventListener('click', event => {
+                window.ITTSU_ANALYTICS?.trackProgramClick?.(program);
                 openProgram(program, event.target.closest('button') || card);
             });
 
