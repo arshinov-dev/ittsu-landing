@@ -19,7 +19,8 @@
     }) {
         let currentLevelFilter = 'all';
         let currentFormFilter = 'all';
-        let isMobileProgramsExpanded = false;
+        let isMobileBasicProgramsExpanded = false;
+        let isMobileSpecializedProgramsExpanded = false;
         let lastFilteredPrograms = programs;
 
         function createProgramCard(program, index) {
@@ -96,7 +97,7 @@
             container.appendChild(section);
         }
 
-        function appendMobileProgramsAction(container, remainingCount) {
+        function appendMobileProgramsAction(container, remainingCount, onClick) {
             if (remainingCount <= 0) return;
 
             const actions = document.createElement('div');
@@ -106,8 +107,83 @@
                     Показать все программы (${remainingCount})
                 </button>
             `;
-            actions.querySelector('.programs-load-more')?.addEventListener('click', showAllPrograms);
+            actions.querySelector('.programs-load-more')?.addEventListener('click', onClick);
             container.appendChild(actions);
+        }
+
+        function getProgramBuckets(programsToRender) {
+            const foreignPrograms = programsToRender.filter(isForeignProgram);
+            const regularPrograms = programsToRender.filter(program => !isForeignProgram(program));
+
+            return {
+                foreignPrograms,
+                regularPrograms,
+                basicPrograms: regularPrograms.filter(program => program.level === 'basic'),
+                specializedPrograms: regularPrograms.filter(program => program.level === 'specialized'),
+                bachelorPrograms: regularPrograms.filter(program => program.level === 'bachelor')
+            };
+        }
+
+        function renderDesktopPrograms(grid, buckets) {
+            const programGroups = [
+                { level: 'basic', title: 'Высшее образование', programs: buckets.basicPrograms },
+                { level: 'specialized', title: 'Специализированное высшее образование', programs: buckets.specializedPrograms },
+                { level: 'bachelor', title: 'Бакалавриат', programs: buckets.bachelorPrograms }
+            ];
+
+            let renderedRegularCount = 0;
+            programGroups.forEach(group => {
+                appendProgramGroup(grid, group.title, group.programs, {
+                    level: group.level,
+                    offset: renderedRegularCount
+                });
+                renderedRegularCount += group.programs.length;
+            });
+
+            appendProgramGroup(grid, 'Образовательные программы для иностранных граждан', buckets.foreignPrograms, {
+                className: 'program-foreign-section',
+                offset: renderedRegularCount
+            });
+        }
+
+        function renderMobilePrograms(grid, buckets) {
+            const basicLimit = mobileProgramInitialLimits.basic || buckets.basicPrograms.length;
+            const specializedLimit = mobileProgramInitialLimits.specialized || buckets.specializedPrograms.length;
+            const visibleBasicPrograms = isMobileBasicProgramsExpanded
+                ? buckets.basicPrograms
+                : buckets.basicPrograms.slice(0, basicLimit);
+            const visibleSpecializedPrograms = isMobileSpecializedProgramsExpanded
+                ? buckets.specializedPrograms
+                : buckets.specializedPrograms.slice(0, specializedLimit);
+            const shouldHideForeignPrograms = !isMobileBasicProgramsExpanded && buckets.basicPrograms.length > 0;
+            const hiddenBasicCount = Math.max(buckets.basicPrograms.length - visibleBasicPrograms.length, 0);
+            const hiddenForeignCount = shouldHideForeignPrograms ? buckets.foreignPrograms.length : 0;
+            const hiddenSpecializedCount = Math.max(buckets.specializedPrograms.length - visibleSpecializedPrograms.length, 0);
+            let renderedCount = 0;
+
+            appendProgramGroup(grid, 'Высшее образование', visibleBasicPrograms, {
+                level: 'basic',
+                offset: renderedCount
+            });
+            renderedCount += visibleBasicPrograms.length;
+
+            appendMobileProgramsAction(grid, hiddenBasicCount + hiddenForeignCount, showBasicPrograms);
+
+            if (!shouldHideForeignPrograms) {
+                appendProgramGroup(grid, 'Образовательные программы для иностранных граждан', buckets.foreignPrograms, {
+                    className: 'program-foreign-section',
+                    offset: renderedCount
+                });
+                renderedCount += buckets.foreignPrograms.length;
+            }
+
+            appendProgramGroup(grid, 'Специализированное высшее образование', visibleSpecializedPrograms, {
+                level: 'specialized',
+                offset: renderedCount
+            });
+            renderedCount += visibleSpecializedPrograms.length;
+
+            appendMobileProgramsAction(grid, hiddenSpecializedCount, showSpecializedPrograms);
         }
 
         function render(programsToRender) {
@@ -115,60 +191,35 @@
             grid.innerHTML = '';
             lastFilteredPrograms = programsToRender;
 
-            const foreignPrograms = programsToRender.filter(isForeignProgram);
-            const regularPrograms = programsToRender.filter(program => !isForeignProgram(program));
-            const shouldLimitPrograms = mobileProgramsQuery.matches && !isMobileProgramsExpanded;
-            const programGroups = [
-                { level: 'basic', title: 'Высшее образование' },
-                { level: 'specialized', title: 'Специализированное высшее образование' },
-                { level: 'bachelor', title: 'Бакалавриат' }
-            ];
+            const buckets = getProgramBuckets(programsToRender);
 
-            let renderedRegularCount = 0;
-            let totalHiddenCount = 0;
-            programGroups.forEach(group => {
-                const groupPrograms = regularPrograms.filter(program => program.level === group.level);
-                const groupLimit = mobileProgramInitialLimits[group.level] || groupPrograms.length;
-                const visibleGroupPrograms = shouldLimitPrograms
-                    ? groupPrograms.slice(0, groupLimit)
-                    : groupPrograms;
-                totalHiddenCount += Math.max(groupPrograms.length - visibleGroupPrograms.length, 0);
+            if (mobileProgramsQuery.matches) {
+                renderMobilePrograms(grid, buckets);
+            } else {
+                renderDesktopPrograms(grid, buckets);
+            }
 
-                appendProgramGroup(grid, group.title, visibleGroupPrograms, {
-                    level: group.level,
-                    offset: renderedRegularCount
-                });
-                renderedRegularCount += visibleGroupPrograms.length;
-            });
-
-            const foreignLimit = mobileProgramInitialLimits.bachelor;
-            const visibleForeignPrograms = shouldLimitPrograms
-                ? foreignPrograms.slice(0, foreignLimit)
-                : foreignPrograms;
-            totalHiddenCount += Math.max(foreignPrograms.length - visibleForeignPrograms.length, 0);
-
-            appendProgramGroup(grid, 'Образовательные программы для иностранных граждан', visibleForeignPrograms, {
-                className: 'program-foreign-section',
-                offset: renderedRegularCount
-            });
-
-            appendMobileProgramsAction(grid, shouldLimitPrograms ? totalHiddenCount : 0);
-
-            if (!regularPrograms.length && !foreignPrograms.length) {
+            if (!buckets.regularPrograms.length && !buckets.foreignPrograms.length) {
                 grid.innerHTML = '<p class="programs-empty">По выбранным фильтрам программы не найдены.</p>';
             }
         }
 
         function resetMobileProgramLimits() {
-            isMobileProgramsExpanded = false;
+            isMobileBasicProgramsExpanded = false;
+            isMobileSpecializedProgramsExpanded = false;
         }
 
         function renderLastFilteredPrograms() {
             render(lastFilteredPrograms);
         }
 
-        function showAllPrograms() {
-            isMobileProgramsExpanded = true;
+        function showBasicPrograms() {
+            isMobileBasicProgramsExpanded = true;
+            render(lastFilteredPrograms);
+        }
+
+        function showSpecializedPrograms() {
+            isMobileSpecializedProgramsExpanded = true;
             render(lastFilteredPrograms);
         }
 
