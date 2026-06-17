@@ -35,6 +35,7 @@
                 ? `<p class="program-foreign-note">${escapeHtml(foreignProgramNote)}</p>`
                 : '';
             const coverEdgeCropClass = needsCoverEdgeCrop(program) ? ' program-image--edge-crop' : '';
+            const programDetailsLabel = `Подробнее о программе ${program.code} ${formatSpecialtyTitle(program.specialtyTitle)}: ${program.title}`;
 
             card.className = 'program-card';
             card.dataset.programName = programName;
@@ -68,7 +69,7 @@
                     </div>
                     <h3 class="program-title">${escapeHtml(program.title)}</h3>
                     ${foreignNote}
-                    <button class="program-btn" type="button" aria-label="Подробнее о программе ${escapeHtml(program.title)}">Подробнее</button>
+                    <button class="program-btn" type="button" aria-label="${escapeHtml(programDetailsLabel)}" title="${escapeHtml(programDetailsLabel)}">Подробнее</button>
                 </div>
             `;
 
