@@ -93,7 +93,7 @@
         updateVisibility();
     }
 
-    window.ITTSU_EFFECTS = {
+    window.IZHT_EFFECTS = {
         createRevealController,
         setupSmoothAnchors,
         setupBackToTop

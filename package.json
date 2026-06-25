@@ -1,8 +1,8 @@
 {
-  "name": "ittsu-landing",
+  "name": "izht-landing",
   "private": true,
   "version": "1.0.0",
-  "description": "Static landing page for ITTSU RUT admission programs.",
+  "description": "Static landing page for IZHT RUT admission programs.",
   "scripts": {
     "check": "npm run check:js && npm run check:deploy && npm run check:structure && npm run check:markup && npm run check:assets && npm run check:data && npm run check:seo",
     "check:assets": "node scripts/check-assets.js",

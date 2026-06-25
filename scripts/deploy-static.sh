@@ -9,7 +9,7 @@ fi
 
 ROOT_DIR=$(CDPATH= cd -- "$(dirname "$0")/.." && pwd)
 PUBLIC_DIR=$(mkdir -p "$PUBLIC_DIR" && CDPATH= cd -- "$PUBLIC_DIR" && pwd)
-STAGING_DIR=$(mktemp -d "${TMPDIR:-/tmp}/ittsu-static.XXXXXX")
+STAGING_DIR=$(mktemp -d "${TMPDIR:-/tmp}/izht-static.XXXXXX")
 PUBLIC_ROOT_FILES="index.html robots.txt sitemap.xml"
 PUBLIC_DIRECTORIES="assets maintenance"
 

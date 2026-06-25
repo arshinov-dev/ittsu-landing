@@ -1,5 +1,5 @@
 // Programs Data
-window.ITTSU_PROGRAMS = [
+window.IZHT_PROGRAMS = [
             {
                 "id": 1,
                 "number": "01",

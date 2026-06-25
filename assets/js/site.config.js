@@ -1,4 +1,4 @@
-window.ITTSU_SITE_CONFIG = {
+window.IZHT_SITE_CONFIG = {
     mobileProgramsMedia: '(max-width: 768px)',
     reducedMotionMedia: '(prefers-reduced-motion: reduce)',
     heroSlideSizes: '(max-width: 768px) calc(100vw - 32px), (min-width: 1640px) 1548px, calc(100vw - 88px)',

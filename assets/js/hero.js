@@ -91,7 +91,7 @@
         }, 4300);
     }
 
-    window.ITTSU_HERO = {
+    window.IZHT_HERO = {
         setupHeroSlideshow
     };
 })();

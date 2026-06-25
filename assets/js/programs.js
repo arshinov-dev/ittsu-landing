@@ -6,7 +6,7 @@
         getProgramImage,
         getProgramImageSrcset,
         needsCoverEdgeCrop
-    } = window.ITTSU_UTILS || {};
+    } = window.IZHT_UTILS || {};
 
     function createProgramsController({
         programs,
@@ -25,7 +25,7 @@
 
         function createProgramCard(program, index) {
             const card = document.createElement('div');
-            const analytics = window.ITTSU_ANALYTICS || {};
+            const analytics = window.IZHT_ANALYTICS || {};
             const programName = analytics.getProgramAnalyticsName?.(program) || `program_${program.number}`;
             const programCategory = analytics.getProgramAnalyticsCategory?.(program) || program.levelName || program.level;
             const revealDelay = Math.min(index, 6) * 35;
@@ -43,7 +43,7 @@
             card.dataset.programCategory = programCategory;
             card.style.setProperty('--reveal-delay', `${revealDelay}ms`);
             card.addEventListener('click', event => {
-                window.ITTSU_ANALYTICS?.trackProgramClick?.(program);
+                window.IZHT_ANALYTICS?.trackProgramClick?.(program);
                 openProgram(program, event.target.closest('button') || card);
             });
 
@@ -298,7 +298,7 @@
         };
     }
 
-    window.ITTSU_PROGRAMS_UI = {
+    window.IZHT_PROGRAMS_UI = {
         createProgramsController
     };
 })();

@@ -1,14 +1,14 @@
 (() => {
-    const siteConfig = window.ITTSU_SITE_CONFIG || {};
+    const siteConfig = window.IZHT_SITE_CONFIG || {};
     const {
         createRevealController,
         setupSmoothAnchors,
         setupBackToTop
-    } = window.ITTSU_EFFECTS || {};
-    const { setupHeroSlideshow } = window.ITTSU_HERO || {};
-    const { createProgramModal } = window.ITTSU_MODAL || {};
-    const { createProgramsController } = window.ITTSU_PROGRAMS_UI || {};
-    const programs = window.ITTSU_PROGRAMS || [];
+    } = window.IZHT_EFFECTS || {};
+    const { setupHeroSlideshow } = window.IZHT_HERO || {};
+    const { createProgramModal } = window.IZHT_MODAL || {};
+    const { createProgramsController } = window.IZHT_PROGRAMS_UI || {};
+    const programs = window.IZHT_PROGRAMS || [];
     const metrikaCounterId = 109911928;
     const cookieConsentStorageKey = 'miit_cookie_consent';
     const programSearchTrackingDelay = 700;
@@ -301,7 +301,7 @@
         sections.forEach(section => observer.observe(section));
     }
 
-    window.ITTSU_ANALYTICS = {
+    window.IZHT_ANALYTICS = {
         reachGoal: reachMetrikaGoal,
         trackProgramClick,
         getProgramAnalyticsName,

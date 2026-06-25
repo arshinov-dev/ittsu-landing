@@ -8,7 +8,7 @@ const source = fs.readFileSync(path.join(root, "assets/js/programs.data.js"), "u
 
 vm.runInNewContext(source, sandbox);
 
-const programs = sandbox.window.ITTSU_PROGRAMS || [];
+const programs = sandbox.window.IZHT_PROGRAMS || [];
 const errors = [];
 const allowedLevels = new Set(["basic", "specialized", "bachelor"]);
 const allowedForms = new Set(["full", "mixed", "part"]);

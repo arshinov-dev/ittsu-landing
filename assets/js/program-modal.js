@@ -13,7 +13,7 @@
         renderPlacesSummary,
         getProfessionsClass,
         needsCoverEdgeCrop
-    } = window.ITTSU_UTILS || {};
+    } = window.IZHT_UTILS || {};
 
     function createProgramModal({ programImageSizes }) {
         const focusableSelector = [
@@ -201,7 +201,7 @@
         };
     }
 
-    window.ITTSU_MODAL = {
+    window.IZHT_MODAL = {
         createProgramModal
     };
 })();

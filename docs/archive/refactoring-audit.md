@@ -1,4 +1,4 @@
-# Refactoring Audit: production-структура ITTSU landing
+# Refactoring Audit: production-структура IZHT landing
 
 Дата актуализации: 2026-06-17
 
@@ -48,7 +48,7 @@
 - Удалены `.DS_Store`.
 - Удалены старые favicon-файлы вне актуального набора.
 - Удален корневой `site.webmanifest`; актуальный manifest лежит в `assets/img/favicon/`.
-- Удалены старые неиспользуемые изображения: `p26/hero-p26`, статичные `map*.jpg`, `hero-bg.jpg`, `ittsu-logo.png`, старые demo `program-1..4-*`.
+- Удалены старые неиспользуемые изображения: `p26/hero-p26`, статичные `map*.jpg`, `hero-bg.jpg`, `izht-logo.png`, старые demo `program-1..4-*`.
 - Удалены `images/benefit-*.jpg`, закомментированный Benefits-блок и его CSS.
 - Удалены неиспользуемые mobile hero-версии `2400/3200`, которые не подключались в текущем `srcset`.
 - Удален устаревший `images/README.txt`.
@@ -63,7 +63,7 @@
 - Добавлены базовые meta description/Open Graph/Twitter-теги без визуальных изменений.
 - Для модалки добавлены `role="dialog"`, `aria-modal`, `aria-labelledby` и переключение `aria-hidden`.
 - Настройки сайта и списки hero-слайдов вынесены из `assets/js/app.js` в `assets/js/site.config.js`.
-- Общие helper-функции вынесены из `assets/js/app.js` в `assets/js/site.utils.js`; наружу отдается только namespace `window.ITTSU_UTILS`.
+- Общие helper-функции вынесены из `assets/js/app.js` в `assets/js/site.utils.js`; наружу отдается только namespace `window.IZHT_UTILS`.
 - `assets/js/app.js` изолирован в IIFE, чтобы его внутренние переменные не попадали в глобальный scope.
 - Hero-слайдер вынесен в `assets/js/hero.js`.
 - Scroll reveal, smooth anchors и back-to-top вынесены в `assets/js/site.effects.js`.
@@ -113,7 +113,7 @@
       programs.data.js
     img/
       brand/
-        130years-rut-ittsu.svg
+        130years-rut-ijt.svg
         max.svg
         tg.svg
         vk.svg
@@ -170,7 +170,7 @@
 
 ### Brand/header/footer
 
-- `assets/img/brand/130years-rut-ittsu.svg`
+- `assets/img/brand/130years-rut-ijt.svg`
 - `assets/img/brand/max.svg`
 - `assets/img/brand/tg.svg`
 - `assets/img/brand/vk.svg`

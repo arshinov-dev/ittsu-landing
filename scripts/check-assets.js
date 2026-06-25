@@ -104,11 +104,11 @@ for (const icon of manifest.icons || []) {
 
 const configSandbox = { window: {} };
 vm.runInNewContext(read("assets/js/site.config.js"), configSandbox);
-const siteConfig = configSandbox.window.ITTSU_SITE_CONFIG || {};
+const siteConfig = configSandbox.window.IZHT_SITE_CONFIG || {};
 
 const sandbox = { window: {} };
 vm.runInNewContext(read("assets/js/programs.data.js"), sandbox);
-const programs = sandbox.window.ITTSU_PROGRAMS || [];
+const programs = sandbox.window.IZHT_PROGRAMS || [];
 
 for (const program of programs) {
   for (const variant of [

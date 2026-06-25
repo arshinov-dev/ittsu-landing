@@ -1,6 +1,6 @@
-# Поступай в ИТТСУ РУТ
+# Поступай в ИЖТ РУТ
 
-Статический лендинг приемной кампании ИТТСУ РУТ.
+Статический лендинг приемной кампании ИЖТ РУТ.
 
 ## Структура
 
@@ -73,7 +73,7 @@ php -S 127.0.0.1:8000
 
 ## Деплой
 
-На сервере репозиторий лучше держать вне публичной папки сайта, например в `~/repos/ittsu-landing`.
+На сервере репозиторий лучше держать вне публичной папки сайта, например в `~/repos/izht-landing`.
 В публичную папку домена копируются только:
 
 ```text
@@ -88,20 +88,20 @@ maintenance/
 Первый clone:
 
 ```bash
-git clone --depth 1 --branch main <repo-url> ~/repos/ittsu-landing
+git clone --depth 1 --branch main <repo-url> ~/repos/izht-landing
 ```
 
 Публикация:
 
 ```bash
-cd ~/repos/ittsu-landing
+cd ~/repos/izht-landing
 PUBLIC_DIR=/path/to/public_html sh scripts/deploy-static.sh
 ```
 
 Обновление:
 
 ```bash
-cd ~/repos/ittsu-landing
+cd ~/repos/izht-landing
 git pull --depth 1 --ff-only
 PUBLIC_DIR=/path/to/public_html sh scripts/deploy-static.sh
 ```

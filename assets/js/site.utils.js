@@ -126,7 +126,7 @@ function needsCoverEdgeCrop(program) {
     return ['15', '24'].includes(String(program.number));
 }
 
-window.ITTSU_UTILS = {
+window.IZHT_UTILS = {
     escapeHtml,
     renderList,
     formatTitleHtml,
